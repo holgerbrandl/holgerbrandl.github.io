@@ -1,11 +1,11 @@
 ---
 layout: page
 title: Efficient and elegant R
-tagline: A blog about R design patterns, R4Intellij and data mining
+tagline: A blog about R design patterns, coding style, R4Intellij and Data Mining
 ---
 {% include JB/setup %}
 
-This blog contains  ideas, snippets, and contributions to [R](http://www.r-project.org/).
+This blog contains ideas, snippets, and contributions to [R](http://www.r-project.org/).
 
 ## About the author
 
