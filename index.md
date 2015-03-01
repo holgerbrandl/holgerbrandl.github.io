@@ -1,36 +1,24 @@
 ---
 layout: page
-title: Hello World!
-tagline: Supporting tagline
+title: Efficient and elegant R
+tagline: A blog about R design patterns, R4Intellij and data mining
 ---
 {% include JB/setup %}
 
-Read [Jekyll Quick Start](http://jekyllbootstrap.com/usage/jekyll-quick-start.html)
+This blog contains  ideas, snippets, and contributions to [R](http://www.r-project.org/).
 
-Complete usage and documentation available at: [Jekyll Bootstrap](http://jekyllbootstrap.com)
+## About the author
 
-## Update Author Attributes
+My name is Holger Brandl. I love (or at least try hard) to write efficient, concise and elegant R, and would like to share some of my creations via this blog. I'm always curious to explore new ways and tools to streamline data processing, thus I've implemented an [R integration](https://github.com/holgerbrandl/r4intellij) for [Intellij IDEA](https://www.jetbrains.com/idea).
 
-In `_config.yml` remember to specify your own data:
-    
-    title : My Blog =)
-    
-    author :
-      name : Name Lastname
-      email : blah@email.test
-      github : username
-      twitter : username
+I hold a [PhD degree](http://pub.uni-bielefeld.de/publication/2305544) in machine learning, have [contributed](http://dblp.uni-trier.de/pers/hd/b/Brandl:Holger) new ideas to computational linguistics, and have recently co-authored publications in [Nature](http://www.nature.com/nature/journal/v500/n7460/full/nature12414.html) and [Sciene](http://www.sciencemag.org/content/early/2015/02/25/science.aaa1975.abstract).  I'm working as a data scientist at the [Max Planck Institute of Molecular Cell Biology and Genetics](http://mpi-cbg.de/) in Dresden, Germany.
 
-The theme should reference these variables whenever needed.
-    
-## Sample Posts
+On motivation for this blog is to get feedback from community about the way I use R, so feel welcome to comment on my articles or to contact me via [email](holgerbrandl+blog@gmail.com). To get in touch with my open-source contributions please visit my [github profile](https://github.com/holgerbrandl) where you can also find the [sources](https://github.com/holgerbrandl/holgerbrandl.github.io) of this blog
 
-This blog contains sample posts which help stage pages and blog data.
-When you don't need the samples anymore just delete the `_posts/core-samples` folder.
 
-    $ rm -rf _posts/core-samples
 
-Here's a sample "posts list".
+
+## Recent Blot Articcles
 
 <ul class="posts">
   {% for post in site.posts %}
@@ -38,9 +26,9 @@ Here's a sample "posts list".
   {% endfor %}
 </ul>
 
-## To-Do
+## Acknowledgements
 
-This theme is still unfinished. If you'd like to be added as a contributor, [please fork](http://github.com/plusjade/jekyll-bootstrap)!
-We need to clean up the themes, make theme usage guides with theme-specific markup examples.
-
+* [Disqus](https://disqus.com/) for hosting and providing the comments section of this blog
+* [Jekyll](http://jekyllrb.com/) which generates this blog directly from markdown
+* [Twittter Bootstrap](http://getbootstrap.com/) for their great css/js themeing framwork used to style this content
 
