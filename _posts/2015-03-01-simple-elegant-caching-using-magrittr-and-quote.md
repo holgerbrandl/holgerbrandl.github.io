@@ -2,8 +2,10 @@
 layout: post
 title: "Simple elegant caching using magrittr and quote"
 description: ""
-category:
+category: []
 published: true
-tags: []
+tags: [magritr, design patterns]
 ---
 {% include JB/setup %}
+
+Some Content
