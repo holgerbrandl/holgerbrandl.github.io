@@ -1,0 +1,34 @@
+---
+layout: post
+title: "Simple elegant caching using magrittr and quote"
+description: ""
+category: []
+published: true
+tags: [magritr, design patterns]
+---
+{% include JB/setup %}
+
+Some Content 2
+
+```{r}
+summary(cars)
+
+```
+
+```{r}
+hallo <- 1+1
+1+1
+par(mar = c(4, 4, 0.1, 0.1), omi = c(0, 0, 0, 0))
+plot(cars)
+```
+
+
+bal bla bla
+
+```{r}
+plot(1:10)
+hist(rnorm(1000))
+```
+
+
+
