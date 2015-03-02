@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Efficient and elegant R
+title: Efficient and Elegant R
 tagline: A blog about R design patterns, coding style, R4Intellij and Data Mining
 ---
 {% include JB/setup %}
