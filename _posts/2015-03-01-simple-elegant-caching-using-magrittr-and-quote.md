@@ -69,7 +69,7 @@ It's basically the same idea but wrapped by a function. However, the key differe
 {% highlight r %}
 some_iris <- quote(iris %>% filter(Species=="setosa")) %>% cache_it()
 {% endhighlight %}
-By default you don't need to provide a name for the cache file, because `cacheName` is derived from the stringified expression using `digest`, but you can also provide a more descriptive name for the cache file:
+By default we don't need to provide a name for the cache file, because `cacheName` is derived from the stringified expression using `digest`, but we can also provide a more descriptive name for the cache file:
 
 
 {% highlight r %}
@@ -103,9 +103,9 @@ some_iris <- filtExpr %>% cache_it()
 some_iris_cached <- filtExpr %>% cache_it()
 {% endhighlight %}
 When `cache_it` is called for the first time, the expression is actually evaluated. However, when being called again with the same expression as argument, the result is retrieved from the cache file (no print output).
-This last example is a bit artificial, and is just presented that way to illustrate the lazy evaluation approach: Just in case a cache-file corresponding to an expression does not exist yet, the expression will be evaluated. In a realistic setup you would also not assign the expression to a variable,  but simply use it as argument (without prior any assignment) to `cache_it` as shown in the examples before.
+This last example is a bit artificial, and is just presented that way to illustrate the lazy evaluation approach: Just in case a cache-file corresponding to an expression does not exist yet, the expression will be evaluated. In a realistic setup we would also not assign the expression to a variable, but simply use it as argument (without prior any assignment) to `cache_it` as shown in the examples before.
 
-Coming back to the initial example, we can now do a lazily cached biomart query, which is robust against biomart downtime, network problems, and helps to reduce the re-runtime of your application.
+Coming back to the initial example, we can now do a lazily cached biomart query, which is robust against biomart downtime, network problems, and helps to reduce the re-runtime of our application.
 
 {% highlight r %}
 genes <- quote({
