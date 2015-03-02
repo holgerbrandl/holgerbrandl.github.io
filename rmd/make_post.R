@@ -3,23 +3,23 @@
 require(knitr)
 require(stringr)
 
-baseDir<-"/Users/brandl/projects/holgerbrandl.github.io"
 
 KnitPost <- function(input, base.url = "/") {
     opts_knit$set(base.url = base.url)
-    fig.path <- file.path(baseDir, "figs", sub(".Rmd$", "", basename(input)))
+    fig.path <- file.path("figs", sub(".Rmd$", "", basename(input)))
     opts_chunk$set(fig.path = fig.path)
     opts_chunk$set(fig.cap = "center")
 
-    render_jekyll(highlight="none")
+    render_jekyll()
 #    render_jekyll(highlight="none")
 
-    output.path=file.path(baseDir, "_posts", str_replace(basename(input), "Rmd", "md"))
+    output.path=file.path("/Users/brandl/projects/holgerbrandl.github.io/_posts", str_replace(basename(input), "Rmd", "md"))
 
     knit(input, output=output.path, envir = parent.frame())
 }
 
 KnitPost("2015-03-01-simple-elegant-caching-using-magrittr-and-quote.Rmd")
+system("mv figs/* ../figs")
 
 
 #knit2html("2015-03-01-simple-elegant-caching-using-magrittr-and-quote.Rmd", envir = parent.frame())

@@ -11,38 +11,58 @@ tags: [magritr, design patterns]
 Some Content 2
 
 
-    summary(cars)
-
-    ##      speed           dist       
-    ##  Min.   : 4.0   Min.   :  2.00  
-    ##  1st Qu.:12.0   1st Qu.: 26.00  
-    ##  Median :15.0   Median : 36.00  
-    ##  Mean   :15.4   Mean   : 42.98  
-    ##  3rd Qu.:19.0   3rd Qu.: 56.00  
-    ##  Max.   :25.0   Max.   :120.00
+{% highlight r %}
+summary(cars)
+{% endhighlight %}
 
 
-    hallo <- 1+1
-    1+1
 
-    ## [1] 2
+{% highlight text %}
+##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00
+{% endhighlight %}
 
-    par(mar = c(4, 4, 0.1, 0.1), omi = c(0, 0, 0, 0))
-    plot(cars)
 
-![center](//Users/brandl/projects/holgerbrandl.github.io/figs/2015-03-01-simple-elegant-caching-using-magrittr-and-quoteunnamed-chunk-2-1.png) 
+{% highlight r %}
+hallo <- 1+1
+1+1
+{% endhighlight %}
+
+
+
+{% highlight text %}
+## [1] 2
+{% endhighlight %}
+
+
+
+{% highlight r %}
+par(mar = c(4, 4, 0.1, 0.1), omi = c(0, 0, 0, 0))
+plot(cars)
+{% endhighlight %}
+
+![center](/figs/2015-03-01-simple-elegant-caching-using-magrittr-and-quoteunnamed-chunk-2-1.png) 
 
 
 bal bla bla
 
 
-    plot(1:10)
+{% highlight r %}
+plot(1:10)
+{% endhighlight %}
 
-![center](//Users/brandl/projects/holgerbrandl.github.io/figs/2015-03-01-simple-elegant-caching-using-magrittr-and-quoteunnamed-chunk-3-1.png) 
+![center](/figs/2015-03-01-simple-elegant-caching-using-magrittr-and-quoteunnamed-chunk-3-1.png) 
 
-    hist(rnorm(1000))
+{% highlight r %}
+hist(rnorm(1000))
+{% endhighlight %}
 
-![center](//Users/brandl/projects/holgerbrandl.github.io/figs/2015-03-01-simple-elegant-caching-using-magrittr-and-quoteunnamed-chunk-3-2.png) 
+![center](/figs/2015-03-01-simple-elegant-caching-using-magrittr-and-quoteunnamed-chunk-3-2.png) 
 
 
 
