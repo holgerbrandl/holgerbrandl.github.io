@@ -62,7 +62,7 @@ cache_it <- function(expr, cacheName=paste0("cache_", substr(digest(expr), 1,6))
 
 ```
 
-It's basically the same idea but wrapped by a function. However, the key difference here is the use of lazy expression evaluation. Let's start with a simple usage example. All we need to do is to provide a quoted expression as argument
+It's basically the same idea but wrapped by a function. However, the key difference here is the use of lazy expression evaluation. Let's start with a simple usage example. All we need to provide is a quoted expression
 
 ```{r}
 some_iris <- quote(iris %>% filter(Species=="setosa")) %>% cache_it()
@@ -75,7 +75,7 @@ some_iris <- quote(iris %>% filter(Species=="setosa")) %>% cache_it("iris_subset
 By doing so the resulting cache file name will be `.iris_subset.RData` compared to the less descriptive  hash-name `.cache_9c39ba.RData` in the first example.
 
 
-To make the idea of lazy evaluation more clear consider the slightly more verbose example, where a complex expression is provided as argument to `cache_it`:
+To make the idea of lazy evaluation more clear consider a slightly more verbose example, where a complex expression is provided as argument to `cache_it`:
 ```{r}
 filtExpr <- quote({
   print("evaluating expression")
