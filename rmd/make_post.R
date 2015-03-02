@@ -9,6 +9,8 @@ KnitPost <- function(input, base.url = "/") {
     fig.path <- file.path("figs", sub(".Rmd$", "", basename(input)))
     opts_chunk$set(fig.path = fig.path)
     opts_chunk$set(fig.cap = "center")
+    opts_chunk$set(cache = T)
+
 
     render_jekyll()
 #    render_jekyll(highlight="none")

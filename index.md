@@ -7,12 +7,12 @@ tagline: A blog about R design patterns, coding style, R4Intellij and Data Minin
 
 This blog contains ideas, snippets, and contributions to [R](http://www.r-project.org/).
 
-My name is Holger Brandl. I love (or at least try hard) to write efficient, concise and elegant R. I would like to share some of my R creations via this blog. I'm always curious to explore new ways and tools to streamline data processing. Thus I've implemented an R integration [Intellij IDEA](https://www.jetbrains.com/idea) called [R4Intellij](https://github.com/holgerbrandl/r4intellij). This blog covers what's new and cool about it.
+My name is Holger Brandl. I love (or at least try hard) to write efficient, concise and elegant R. I would like to share some of my R creations via this blog. I'm always curious to explore new ways and tools to streamline data processing. Thus I've implemented an R integration for  [Intellij IDEA](https://www.jetbrains.com/idea) called [R4Intellij](https://github.com/holgerbrandl/r4intellij). This blog covers what's new and cool about it.
 
 ## A bit more about the author
 
 
-I hold a [PhD degree](http://pub.uni-bielefeld.de/publication/2305544) in machine learning, have [devloped](http://dblp.uni-trier.de/pers/hd/b/Brandl:Holger) some new concepts in the field of computational linguistics, and have recently co-authored publications in [Nature](http://www.nature.com/nature/journal/v500/n7460/full/nature12414.html) and [Sciene](http://www.sciencemag.org/content/early/2015/02/25/science.aaa1975.abstract).  Currently, I'm working as a data scientist at the [Max Planck Institute of Molecular Cell Biology and Genetics](http://mpi-cbg.de/) in Dresden, Germany.
+I hold a [PhD degree](http://pub.uni-bielefeld.de/publication/2305544) in machine learning, have [developed](http://dblp.uni-trier.de/pers/hd/b/Brandl:Holger) some new concepts in the field of computational linguistics, and have recently co-authored publications in [Nature](http://www.nature.com/nature/journal/v500/n7460/full/nature12414.html) and [Sciene](http://www.sciencemag.org/content/early/2015/02/25/science.aaa1975.abstract).  Currently, I'm working as a data scientist at the [Max Planck Institute of Molecular Cell Biology and Genetics](http://mpi-cbg.de/) in Dresden, Germany.
 
 On major motivation for this blog is to get feedback from other data professionals about the way I use R. So please feel welcome to comment on my articles or to contact me via [email](holgerbrandl+blog@gmail.com). To get in touch with my open-source contributions please visit my [github profile](https://github.com/holgerbrandl) where you can also find the [sources](https://github.com/holgerbrandl/holgerbrandl.github.io) of this blog.
 
