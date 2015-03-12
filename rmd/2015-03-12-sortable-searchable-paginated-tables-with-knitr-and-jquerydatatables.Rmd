@@ -1,0 +1,73 @@
+---
+layout: post
+title: "Sortable, searchable, paginated tables with knitr and jquery.DataTables"
+description: ""
+category: 
+tags: [knitr]
+---
+{% include JB/setup %}
+
+<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css">
+<script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-2.1.2.min.js"></script>
+<script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript">
+         $(document).ready(function() {
+            // alert("test")
+             $("table").DataTable();
+             //$("#tab_id").DataTable();
+             //$(".dtable").DataTable();
+         } );
+</script>
+
+### Setup
+
+Somewhere at the beginning of Rmd we need to setup the jquery/DataTable infrastructure by simply including the following lines
+
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css">
+    <script src="http://code.jquery.com/jquery-2.1.2.min.js"></script>
+    <script src="http://cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+             $(document).ready(function() {
+                 $("table").DataTable();
+             } );
+    </script>
+
+
+To get started we need data, thus we load `ggplot` and `dplyr` for convenience.
+```{r message=FALSE, warning=FALSE}
+require(dplyr)
+require(ggplot2)
+```
+
+Now we can create sortable, paginated, searchable tables by adding a chunk with the option <code>results='asis'</code>
+
+```{r results='asis'}
+iris %>% head(20) %>% kable()
+```
+
+Usually we would not use `head` here, it's just included to make this blog post nicely in blog reader where the java-script is not working correctly.
+
+The scheme not limited to a single table, but we can embed as many as we like
+```{r results='asis'}
+mtcars %>% head(20) %>% kable()
+```
+
+### Links
+
+To also allow for interactive links we have to render html with `kable` without escaping the data:
+```{r results='asis'}
+iris %>% head(20) %>%
+    mutate(Species=paste0("<a href='https://www.google.com/?q=",Species,"'>",Species,"</a>")) %>%
+    kable("html", table.attr = "class='dtable'", escape=F)
+
+```
+
+### Selective interactivity
+
+Most of the time we don't need interactivity for all tables, but just for a subset for them. To achieve this, the jquery selector in initialization method is changed to `$(".dtable")` and tables are flagged with class attribute:
+```{r eval=F}
+iris %>% kable("html", table.attr = "class='dtable'", escape=F)
+```
+Using this scheme we can now easily make tables interactive by adding a `dtable` class attribute.

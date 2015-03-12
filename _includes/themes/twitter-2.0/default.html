@@ -76,9 +76,9 @@
 
     </div> <!-- /container -->
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="{{ ASSET_PATH }}/js/jquery.min.js"><\/script>')</script>
-    <script src="{{ ASSET_PATH }}/js/bootstrap.min.js"></script>
+    <!-- or operator works because "an object is always truthy" in jquery. see  http://jqfundamentals.com/chapter/jquery-basics -->
+    <!--<script>window.jQuery || document.write('<script src="{{ ASSET_PATH }}/js/jquery.min.js"><\/script>')</script>-->
+    <script>window.jQuery || document.write('<script src="http://code.jquery.com/jquery-2.1.2.min.js"><\/script>')</script>
     {% include JB/analytics %}
   </body>
 </html>
