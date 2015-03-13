@@ -14,15 +14,20 @@ tags: [knitr]
 <script type="text/javascript">
          $(document).ready(function() {
             // alert("test")
+             //$("table").DataTable();
              $("table").DataTable();
              //$("#tab_id").DataTable();
              //$(".dtable").DataTable();
          } );
 </script>
 
+Creating reports with [knitr](http://yihui.name/knitr/) is becoming increasingly popular. Those documents are beautiful because they tightly link code to results. One drawback is that they lack an interactive element compared to server-client solutions like [shiny](http://shiny.rstudio.com/). More recently java-script based solutions like [rcharts](http://rcharts.io/), [plotly](https://plot.ly/r/), [htmlwidgets](http://www.htmlwidgets.org/), [SortableHTMLTables](http://cran.r-project.org/web/packages/SortableHTMLTables/index.html) have started to overcome this limitation and allow for dynamic interactive reporting using R-Markdown.
+
+One popular way to add interactivity to html tables in the web-development community, is to use the powerful and elegant [DataTable](http://www.datatables.net/) module, which is a plug-in for the [jQuery](http://jquery.com/). In this article we show how knitr and DataTables can be mixed to generated sortable, searchable, paginated tables using just Rmarkdown.
+
 ### Setup
 
-Somewhere at the beginning of Rmd we need to setup the jquery/DataTable infrastructure by simply including the following lines
+Somewhere at the beginning of our Rmd we need to setup the jquery/DataTable infrastructure by simply including the following lines
 
     <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css">
     <script src="http://code.jquery.com/jquery-2.1.2.min.js"></script>
@@ -35,39 +40,50 @@ Somewhere at the beginning of Rmd we need to setup the jquery/DataTable infrastr
     </script>
 
 
-To get started we need data, thus we load `ggplot` and `dplyr` for convenience.
+To get started we need data, thus we load `ggplot` and for convenience also `dplyr`.
 ```{r message=FALSE, warning=FALSE}
 require(dplyr)
 require(ggplot2)
 ```
 
+```{r message=FALSE, echo=FALSE}
+require(magrittr)
+## Usually we would not use `head` here, it's just included to make this blog post nicely in blog reader where the java-script is not working correctly.
+iris %<>% sample_n(., nrow(.), replace=F) %>% head(20)
+mtcars %<>% sample_n(., nrow(.), replace=F) %>% head(20)
+```
+
 Now we can create sortable, paginated, searchable tables by adding a chunk with the option <code>results='asis'</code>
 
 ```{r results='asis'}
-iris %>% head(20) %>% kable()
+iris %>%  kable()
 ```
 
-Usually we would not use `head` here, it's just included to make this blog post nicely in blog reader where the java-script is not working correctly.
-
-The scheme not limited to a single table, but we can embed as many as we like
+The scheme is not limited to a single table, but we can embed as many as we like
 ```{r results='asis'}
-mtcars %>% head(20) %>% kable()
+mtcars %>% kable()
 ```
 
 ### Links
 
 To also allow for interactive links we have to render html with `kable` without escaping the data:
 ```{r results='asis'}
-iris %>% head(20) %>%
+iris %>%
     mutate(Species=paste0("<a href='https://www.google.com/?q=",Species,"'>",Species,"</a>")) %>%
-    kable("html", table.attr = "class='dtable'", escape=F)
+    kable("html", escape=F)
 
 ```
 
 ### Selective interactivity
 
-Most of the time we don't need interactivity for all tables, but just for a subset for them. To achieve this, the jquery selector in initialization method is changed to `$(".dtable")` and tables are flagged with class attribute:
+Most of the time we do not need interactivity for all tables, but just for a subset for them. To achieve this, the jquery selector in the initialization method is changed to `$(".dtable")` and we decorate the tables that should be interactive with a `dtable` class attribute:
 ```{r eval=F}
 iris %>% kable("html", table.attr = "class='dtable'", escape=F)
 ```
-Using this scheme we can now easily make tables interactive by adding a `dtable` class attribute.
+Using this scheme we can now selectively render tables as simple html or if needed as dynamic DataTables.
+
+
+### Wrap up
+
+By mixing `jquery` with `knitr` we've created a simplistic but yet very powerful scheme to include dynamic tables into R Markdown documents. Not covered here, but natural next steps, could be a function wrapper for `kable` to streamline the inclusion of the jquery libraries, or more DataTable customizations to allow for  [columnn filters](http://jquery-datatables-column-filter.googlecode.com/svn/trunk/index.html), toggable [column visibility](https://datatables.net/extensions/colvis/), or to include any of the DataTable [extensions](https://datatables.net/extensions/). In most cases those will require almost no coding effort and are almost invisible when writing the R Markdown.
+
