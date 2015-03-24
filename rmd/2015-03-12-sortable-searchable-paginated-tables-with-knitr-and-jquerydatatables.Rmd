@@ -87,3 +87,7 @@ Using this scheme we can now selectively render tables as simple html or if need
 
 By mixing `jquery` with `knitr` we've created a simplistic but yet very powerful scheme to include dynamic tables into R Markdown documents. Not covered here, but natural next steps, could be a function wrapper for `kable` to streamline the inclusion of the jquery libraries, or more DataTable customizations to allow for  [columnn filters](http://jquery-datatables-column-filter.googlecode.com/svn/trunk/index.html), toggable [column visibility](https://datatables.net/extensions/colvis/), or to include any of the DataTable [extensions](https://datatables.net/extensions/). In most cases those will require almost no coding effort and are almost invisible when writing the R Markdown.
 
+
+## Update
+
+Since I've written this blog post the folks from [RStudio](http://www.rstudio.com/) have released [DT package](http://rstudio.github.io/DT/) which essentially hides the logic described in this article. However, at the moment it seems quite tied to rstudio so I think it's still interesting to understand the undlying mechanism (which is what this article was about).
