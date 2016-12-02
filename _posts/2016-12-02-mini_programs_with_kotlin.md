@@ -67,7 +67,7 @@ To allow for **0-installation scriptlets** that do their own automatic dependenc
 
 Because of Kotlin's nice and concise collections API and syntax, the solution should be readable almost even to non-developers. ;-)
 
-Previously `kscript` allowed to run such scriptlets either by saving the them as a file or by inlining (See its [docs]((https://github.com/holgerbrandl/kscript)) for more examples):
+Previously `kscript` allowed to run such scriptlets either from a file or inlined (See its [docs]((https://github.com/holgerbrandl/kscript)) for more examples):
 
 ```bash
 ## simply read the script from stdin
