@@ -34,7 +34,7 @@ ATCCAGGGCGATTCAGAGGGCCCCGGGCCACGTTATCTCGGCGCTGGTTTCGCGCTGGTTTCGCGCTGGTTTCGC
 CTGGTTTCC
 ```
  
- For sure, there are many different [ways to solve](https://www.biostars.org/p/79202/) this problem. E.g. using a tool called `samtools faidx` with downstream filtering of it's output using `awk`. Or by reformating the commonly multi-line fasta into single, line via `perl` plus some `awk` and so on. [BioPyton](https://github.com/biopython/biopython.github.io/) or [BioPerl](http://bioperl.org/) also do the trick, are very readable, but require installation and additional setup efforts.
+ For sure, there are many different [ways to solve](https://www.biostars.org/p/79202/) this problem. E.g. using a tool called `samtools faidx` with downstream filtering of its output using `awk`. Or by reformating the commonly multi-line fasta into single, line via `perl` plus some `awk` and so on. [BioPyton](https://github.com/biopython/biopython.github.io/) or [BioPerl](http://bioperl.org/) also do the trick, are very readable, but require installation and additional setup efforts.
 
 To allow for **0-installation scriptlets** that do their own automatic dependency resolution, `kscript` comes to rescue. Here's a  Kotlin solution for the filter problem from above, which we'll work through step by step:
  
@@ -66,7 +66,7 @@ To allow for **0-installation scriptlets** that do their own automatic dependenc
 
 Because of Kotlin's nice and concise collections API and syntax, the solution should be readable almost even to non-developers. ;-)
 
-Previously `kscript` allowed to run such scriptlets either by saving the them as a file or by inlining (See it's [docs]((https://github.com/holgerbrandl/kscript)) for more examples):
+Previously `kscript` allowed to run such scriptlets either by saving the them as a file or by inlining (See its [docs]((https://github.com/holgerbrandl/kscript)) for more examples):
 
 ```bash
 ## simply read the script from stdin
