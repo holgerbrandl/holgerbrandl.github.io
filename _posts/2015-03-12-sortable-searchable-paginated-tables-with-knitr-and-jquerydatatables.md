@@ -1,11 +1,9 @@
 ---
 layout: post
 title: "Sortable, searchable, paginated tables with knitr and jquery.DataTables"
-description: ""
-category: 
-tags: [knitr]
+categories: [knitr]
+comments: true
 ---
-{% include JB/setup %}
 
 <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css">
 <script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-2.1.2.min.js"></script>
@@ -294,3 +292,5 @@ By mixing `jquery` with `knitr` we've created a simplistic but yet very powerful
 ## Update
 
 Since I've written this blog post the folks from [RStudio](http://www.rstudio.com/) have released [DT package](http://rstudio.github.io/DT/) which essentially hides the logic described in this article. However, at the moment it seems quite tied to rstudio so I think it's still interesting to understand the undlying mechanism (which is what this article was about).
+
+{% include comments.html %}

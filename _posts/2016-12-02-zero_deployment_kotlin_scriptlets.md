@@ -1,11 +1,10 @@
 ---
 layout: post
 title: Upgrade your workflow with 0-installation kotlin scriptlets
-description: "Use kscript and kotlin snippets for versionable zero-deployment tooldevelopment"
-category: 
-tags: [open science, kotlin, kscript]
+description: "Use kscript and kotlin snippets for versioned zero-deployment tool development"
+categories: [open science, kotlin, kscript]
+comments: true
 ---
-{% include JB/setup %}
 
 
 In common bioinformatics/scientific workflows black magic bash hacking skills are often required and used to process data. This is because these workflows tend to live in the bash-shell and for many data processing tasks there is no actual little nifty tool. Omnipresent on _solution repositories_ like [biostar](https://www.biostars.org/) or [stackoverflow](http://stackoverflow.com/) are crazy combinations of perl, grep, awk, that tend to very cryptic even to experienced data monkeys. More high-level solution in python or R can be developed but often lack the portability necessary to enable colleagues to run those solutions without additional setup efforts.
@@ -78,7 +77,6 @@ kscript test.kts
 ```
 However, since recently `kscript` also can also read URLs which evlevates its usage to a new level. So since the fasta length filter scriplet from above was deposited as a [gist](https://gist.github.com/holgerbrandl/521a5e9b1eb0d5b443b82cf13f66074f) on github, we can now simply write
 ```bash
-## 
 kscript https://git.io/v1ZUY test.fasta 20 > filtered.fasta
 ```
 
@@ -90,8 +88,9 @@ fasta_length_filter ~/test.fasta 20 > filtered.fasta
 ```
 When being invoked without arguments `fasta_length_filter` will provide just the usage info.
 
-Depending on users' preference the URL could point either to the master revision of the gist or to a particular revision for better reproducibility. Since the scriplet is versioned along with its dependencies (which ware fetched via `maven`), this approach does not depend on API stability for the external libraries being used -- a common problem which is tedious to overcome when working with python, R or perl! In contrast `kscript` solutions provide absolute **long-term stability** (within the limits of a hardly ever changing JVM and the kotlin compiler).
+Depending on the users' preference the URL could point either to the master revision of the gist or to a particular revision for better reproducibility. Since the scriplet is versioned along with its dependencies (which ware fetched via `maven`), this approach does not depend on API stability for the external libraries being used -- a common problem which is tedious to overcome when working with python, R or perl! In contrast `kscript` solutions provide absolute **long-term stability** (within the limits of a hardly ever changing JVM and the kotlin compiler).
 
-In this post I've discussed how kscript can be used to write versionable, self-boostrappting mini-programs using `kscript` and `Kotlin`. In my next posting I'll talk about the support APi for `kscript` to allow for `awk`-like one-liners written in Kotlin to please they eye instead of being confusing and `aw(k)`ful.
+In this post I've discussed how to write versioned, bootstrapping mini-programs using `kscript` and `Kotlin`. In my next posting I'll talk about the support APi for `kscript` to allow for `awk`-like one-liners written in Kotlin to please they eye instead of being confusing and `aw(k)`ful.
  
 
+{% include comments.html %}

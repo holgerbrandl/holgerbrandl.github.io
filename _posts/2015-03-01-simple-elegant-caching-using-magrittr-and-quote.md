@@ -1,12 +1,10 @@
 ---
 layout: post
 title: "Simple elegant caching using magrittr and quote"
-description: ""
-category: []
+categories: [magritr, design patterns]
 published: true
-tags: [magritr, design patterns]
+comments: true
 ---
-{% include JB/setup %}
 
 A common element of data-processing workflows are long(er) running method calls that return a stable result for some period of time. Typical examples are data-base queries to resources like [biomart](http://www.ensembl.org/biomart/martview), [kegg](http://www.bioconductor.org/packages/release/bioc/html/KEGGREST.html), [NCBI Eutils](http://www.ncbi.nlm.nih.gov/books/NBK25501/), or local data processing on semi-static large data (e.g. reference data sets).
 
@@ -115,5 +113,4 @@ genes <- quote({
 {% endhighlight %}
 
 
-
-
+{% include comments.html %}
