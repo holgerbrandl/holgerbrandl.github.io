@@ -67,8 +67,8 @@ To allow for **0-installation scriptlets** that do their own automatic dependenc
 Because of Kotlin's nice and concise collections API and syntax, the solution should be readable almost even to non-developers. ;-)
 
 Previously `kscript` allowed to run such scriptlets either by saving the them as a file or by inlining (See it's [docs]((https://github.com/holgerbrandl/kscript)) for more examples):
-```bash
 
+```bash
 ## simply read the script from stdin
 echo 'println("hello world")' | kscript -
 
@@ -76,7 +76,9 @@ echo 'println("hello world")' | kscript -
 echo 'println("hello world")' > test.kts
 kscript test.kts
 ```
+
 However, since recently `kscript` also can also read URLs which evlevates its usage to a new level. So since the fasta length filter scriplet from above was deposited as a [gist](https://gist.github.com/holgerbrandl/521a5e9b1eb0d5b443b82cf13f66074f) on github, we can now simply write
+
 ```bash
 kscript https://git.io/v1ZUY test.fasta 20 > filtered.fasta
 ```
