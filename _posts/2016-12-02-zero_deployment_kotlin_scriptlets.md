@@ -34,7 +34,7 @@ ATCCAGGGCGATTCAGAGGGCCCCGGGCCACGTTATCTCGGCGCTGGTTTCGCGCTGGTTTCGCGCTGGTTTCGC
 CTGGTTTCC
 ```
  
- For sure, there are many different [ways to solve](https://www.biostars.org/p/79202/) this problem. E.g. using a tool called `samtools faidx` with downstream filtering of its output using `awk`. Or by reformating the commonly multi-line fasta into single, line via `perl` plus some `awk` and so on. [BioPyton](https://github.com/biopython/biopython.github.io/) or [BioPerl](http://bioperl.org/) also do the trick, are very readable, but require installation and additional setup efforts.
+ For sure, there are many different [ways to solve](https://www.biostars.org/p/79202/) this problem. E.g. using a tool called `samtools faidx` with downstream filtering of its output using `awk`. Or by reformating the multi-line fasta into single-line via `perl` plus some `awk` and so on. [BioPyton](https://github.com/biopython/biopython.github.io/) or [BioPerl](http://bioperl.org/) also do the trick, are very readable, but require installation and additional setup efforts.
 
 To allow for **0-installation scriptlets** that do their own automatic dependency resolution, `kscript` comes to rescue. Here's a  Kotlin solution for the filter problem from above, which we'll work through step by step:
  
@@ -61,8 +61,9 @@ To allow for **0-installation scriptlets** that do their own automatic dependenc
 ```
 
 * First a single dependency is added that provides a Kotlin API to parse fasta-formatted data. 
-* Because some of the sequences might be large we want to run with 2gb of memory. Since it is supposed to be a self-contained mini-program it ships a simplistic CLI involving just an input file and the length-cutoff. 
-* The implementation is straightforward: It creates an iterator over the entries in the fasta-file, which is filtered by length and the remaining entries are printed to stdout. 
+* Because some of the sequences might be large we want to run with 2gb of memory. 
+* Since it is supposed to be a self-contained mini-program it ships a simplistic CLI involving just an input file and the length-cutoff. 
+* The implementation is straightforward: We create an iterator over the entries in the fasta-file, which is filtered by length, and the remaining entries are printed to stdout. 
 
 Because of Kotlin's nice and concise collections API and syntax, the solution should be readable almost even to non-developers. ;-)
 
@@ -77,7 +78,7 @@ echo 'println("hello world")' > test.kts
 kscript test.kts
 ```
 
-However, since recently `kscript` also can also read URLs which evlevates its usage to a new level. So since the fasta length filter scriplet from above was deposited as a [gist](https://gist.github.com/holgerbrandl/521a5e9b1eb0d5b443b82cf13f66074f) on github, we can now simply write
+However, since recently `kscript` also can **now also read URLs** which elevates its usage to a new level: The fasta length filter scriplet from above was deposited as a [gist](https://gist.github.com/holgerbrandl/521a5e9b1eb0d5b443b82cf13f66074f) on github, and we can now simply write
 
 ```bash
 kscript https://git.io/v1ZUY test.fasta 20 > filtered.fasta
