@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Efficient and Elegant R
-tagline: A blog about R, Kotlin and Data Mining
+title: Data should flow not stumble through code
+tagline: Meditations on Data, R, Kotlin and the universe
 ---
 {% include JB/setup %}
 

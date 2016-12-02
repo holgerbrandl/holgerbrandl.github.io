@@ -8,11 +8,10 @@ highlighter: pygments
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : Efficient and Elegant R
-tagline: Site Tagline
+title : Data should flow not stumble through code
+tagline: Meditations on Data, R, Kotlin and the universe
 author :
   name : Holger Brandl
-  email : blah@email.test
   github : https://github.com/holgerbrandl
 #  twitter : username
 #  feedburner : feedname
@@ -30,7 +29,7 @@ production_url : http://holgerbrandl.github.io/
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
 JB :
-  version : 0.3.0
+  version : 0.4.0
 
   # All links will be namespaced by BASE_PATH if defined.
   # Links in your website should always be prefixed with {{BASE_PATH}}
