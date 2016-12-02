@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "Simple elegant caching using magrittr and quote"
-categories: [magritr, design patterns]
+categories: r
+tags: [magritr, design patterns]
 published: true
 comments: true
 ---

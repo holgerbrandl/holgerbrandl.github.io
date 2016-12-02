@@ -2,7 +2,7 @@
 layout: post
 title: Upgrade your workflow with 0-installation kotlin scriptlets
 description: "Use kscript and kotlin snippets for versioned zero-deployment tool development"
-categories: [open science, kotlin, kscript]
+categories: [kotlin]
 comments: true
 ---
 
@@ -15,29 +15,30 @@ To overcome this problem, I've evolved a small extension tool to named [`kscript
 Although `kscript` has helped to create readable kotlin solutions for a range of data flow problems, it was still a bit tedious to ship around developed solutions in a concise and user-friendly manner. To overcome this problem, I've recently enhanced `kscript` to also allow for URLs as scriptlet sources.
 
 Let's do an example. Imagine you'd need to filter a list of genomic sequences saved in a [fasta-formatted](https://en.wikipedia.org/wiki/FASTA_format) file by length. This is how the data may look like:
- ```
- >HSBGPG Human gene for bone gla protein (BGP)
- GGCAGATTCCCCCTAGACCCGCCCGCACCATGGTCAGGCATGCCCCTCCTCATCGCTGGGCACAGCCCAGAGGGT
- ATAAACAGTGCTGGAGGCTGGCGGGGCAGGCCAGCTGAGTCCTGAGCAGCAGCCCAGCGCAGCCACCGAGACACC
- CTCCAGGCACCCTTCTTTCCTCTTCCCCTTGCCCTTGCCCTGACCTCCCAGCCCTATGGATGTGGGGTCCCCATC
- ATCCCAGCTGCTCCCAAATAAACTCCAGAAG
- >HSGLTH1 Human theta 1-globin gene
- CCACTGCACTCACCGCACCCGGCCAATTTTTGTGTTTTTAGTAGAGACTAAATACCATATAGTGAACACCTAAGA
- CGGGGGGCCTTGGATCCAGGGCGATTCAGAGGGCCCCGGTCGGAGCTGTCGGAGATTGAGCGCGCGCGGTCCCGG
- GATCTCCGACGAGGCCCTGGACCCCCGGGCGGCGAAGCTGCGGCGCGGCGCCCCCTGGAGGCCGCGGGACCCCTG
- TCAGCCCCGCGCTGCAGGCGTCGCTGGACAAGTTCCTGAGCCACGTTATCTCGGCGCTGGTTTCCGAGTACCGCT
- GAACTGTGGGTGGGTGGCCGCGGGATCCCCAGGCGACCTTCCCCGTGTTTGAGTAAAGCCTCTCCCAGGAGCAGC
- CTTCTTGCCGTGCTCTCTCGAGGTCAGGACGCGAGAGGAAGGCGC
+
+```
+>HSBGPG Human gene for bone gla protein (BGP)
+GGCAGATTCCCCCTAGACCCGCCCGCACCATGGTCAGGCATGCCCCTCCTCATCGCTGGGCACAGCCCAGAGGGT
+ATAAACAGTGCTGGAGGCTGGCGGGGCAGGCCAGCTGAGTCCTGAGCAGCAGCCCAGCGCAGCCACCGAGACACC
+CTCCAGGCACCCTTCTTTCCTCTTCCCCTTGCCCTTGCCCTGACCTCCCAGCCCTATGGATGTGGGGTCCCCATC
+ATCCCAGCTGCTCCCAAATAAACTCCAGAAG
+>HSGLTH1 Human theta 1-globin gene
+CCACTGCACTCACCGCACCCGGCCAATTTTTGTGTTTTTAGTAGAGACTAAATACCATATAGTGAACACCTAAGA
+CGGGGGGCCTTGGATCCAGGGCGATTCAGAGGGCCCCGGTCGGAGCTGTCGGAGATTGAGCGCGCGCGGTCCCGG
+GATCTCCGACGAGGCCCTGGACCCCCGGGCGGCGAAGCTGCGGCGCGGCGCCCCCTGGAGGCCGCGGGACCCCTG
+TCAGCCCCGCGCTGCAGGCGTCGCTGGACAAGTTCCTGAGCCACGTTATCTCGGCGCTGGTTTCCGAGTACCGCT
+GAACTGTGGGTGGGTGGCCGCGGGATCCCCAGGCGACCTTCCCCGTGTTTGAGTAAAGCCTCTCCCAGGAGCAGC
+CTTCTTGCCGTGCTCTCTCGAGGTCAGGACGCGAGAGGAAGGCGC
 >ARGH1 Transcriptional regulartor
 ATCCAGGGCGATTCAGAGGGCCCCGGGCCACGTTATCTCGGCGCTGGTTTCGCGCTGGTTTCGCGCTGGTTTCGCG
 CTGGTTTCC
- ```
+```
  
  For sure, there are tons of ways to solve this. E.g. using a tool called `samtools faidx` with downstream filtering of it's output using `awk`. Or by reformating the commonly multi-line fasta into single, line via `perl` plus some `awk` and so on. [BioPyton](https://github.com/biopython/biopython.github.io/) or [BioPerl](http://bioperl.org/) also do the trick, are very readable, but require installation and additional setup efforts.
 
 To allow for **0-installation scriptlets** that do their own automatic dependency resolution, `kscript` comes to rescue. Here's a  Kotlin solution for the filter problem from above, which we'll work through step by step:
  
- ```kotlin
+```kotlin
  //DEPS de.mpicbg.scicomp:kutils:0.4
  //KOTLIN_OPTS -J-Xmx2g
  
@@ -57,7 +58,7 @@ To allow for **0-installation scriptlets** that do their own automatic dependenc
  openFasta(fastaFile).
      filter { it.sequence.length >= lengthCutoff }.
      forEach { print(it.toEntryString()) }
- ```
+```
 
 * First a single dependency is added that provides a Kotlin API to parse fasta-formatted data. 
 * Because some of the sequences might be large we want to run with 2gb of memory. Since it is supposed to be a self-contained mini-program it ships a simplistic CLI involving just an input file and the length-cutoff. 
@@ -81,11 +82,13 @@ kscript https://git.io/v1ZUY test.fasta 20 > filtered.fasta
 ```
 
 To further increase readability and convenience, we can `alias` the first part
+
 ```bash
 alias fasta_length_filter="kscript https://git.io/v1ZUY"
 
 fasta_length_filter ~/test.fasta 20 > filtered.fasta
 ```
+
 When being invoked without arguments `fasta_length_filter` will provide just the usage info.
 
 Depending on the users' preference the URL could point either to the master revision of the gist or to a particular revision for better reproducibility. Since the scriplet is versioned along with its dependencies (which ware fetched via `maven`), this approach does not depend on API stability for the external libraries being used -- a common problem which is tedious to overcome when working with python, R or perl! In contrast `kscript` solutions provide absolute **long-term stability** (within the limits of a hardly ever changing JVM and the kotlin compiler).

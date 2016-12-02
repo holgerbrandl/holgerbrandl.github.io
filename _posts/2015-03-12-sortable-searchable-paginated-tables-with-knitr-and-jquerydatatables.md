@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Sortable, searchable, paginated tables with knitr and jquery.DataTables"
-categories: [knitr]
+categories: r
 comments: true
 ---
 
