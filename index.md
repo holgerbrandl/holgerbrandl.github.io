@@ -1,13 +1,15 @@
 ---
 layout: page
 title: Efficient and Elegant R
-tagline: A blog about R design patterns, coding style, R4Intellij and Data Mining
+tagline: A blog about R, Kotlin and Data Mining
 ---
 {% include JB/setup %}
 
-This blog contains ideas, snippets, and contributions to [R](http://www.r-project.org/).
+This blog contains ideas, snippets, and contributions to [R](http://www.r-project.org/) and [Kotlin](https://kotlinlang.org/).
 
-My name is Holger Brandl. I love (or at least try hard) to write efficient, concise and elegant R. I would like to share some of my R creations via this blog. I'm always curious to explore new ways and tools to streamline data processing. Thus I've implemented an R integration for  [Intellij IDEA](https://www.jetbrains.com/idea) called [R4Intellij](https://github.com/holgerbrandl/r4intellij). This blog covers what's new and cool about it.
+My name is Holger Brandl. I love (or at least try hard) to write efficient, concise and elegant R. I would like to share some of my R creations via this blog. I'm always curious to explore new ways and tools to streamline data processing. 
+
+I've implemented an R plugin for [Intellij IDEA](https://www.jetbrains.com/idea) called [R4Intellij](https://github.com/holgerbrandl/r4intellij). I'm also in love with kotlin and it's applications to bioinformatics and data engineering, e.g [kscript](https://github.com/holgerbrandl/kscript) for simplified shell integration of kotlin snippets or [krangl](https://github.com/holgerbrandl/krangl) for in-memory table crunching. 
 
 ## A bit more about the author
 
