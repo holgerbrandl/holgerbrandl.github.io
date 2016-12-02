@@ -7,7 +7,7 @@ comments: true
 ---
 
 
-In common bioinformatics/scientific workflows black magic bash hacking skills are often required and used to process data. This is because these workflows tend to live in the bash-shell and for many data processing tasks there is no actual little nifty tool. Omnipresent on _solution repositories_ like [biostar](https://www.biostars.org/) or [stackoverflow](http://stackoverflow.com/) are crazy combinations of perl, grep, awk, that tend to very cryptic even to experienced data monkeys. More high-level solution in python or R can be developed but often lack the portability necessary to enable colleagues to run those solutions without additional setup efforts.
+In common bioinformatics/scientific workflows black magic bash hacking skills are often required and used to process data. This is because these workflows tend to live in the bash-shell, and for many data processing tasks there is no actual direct tool. To make data flow nevertheless _solution repositories_ like [biostar](https://www.biostars.org/) or [stackoverflow](http://stackoverflow.com/) tend to suggest crazy combinations of `perl`, `grep`, `awk` or `sed` mixed with various amounts of `bash`. Such solutions often lack engineering quality, depend on specific platforms and versions, and tend to very cryptic even for well-trained data monkeys. More high-level solution in _python_ or _R_ could be used as well, but hardly ever run without additional setup efforts.
    
 To overcome this problem, I've evolved a small extension tool to named [`kscript`](https://github.com/holgerbrandl/kscript) over the last months. It allows to easily embed [Kotlin](https://kotlinlang.org/) scriptlets into the shell, and ships with features like compile-jar-caching and automatic dependency resolution. Just see its [github page](https://github.com/holgerbrandl/kscript) for details and examples.  
 
@@ -30,11 +30,11 @@ TCAGCCCCGCGCTGCAGGCGTCGCTGGACAAGTTCCTGAGCCACGTTATCTCGGCGCTGGTTTCCGAGTACCGCT
 GAACTGTGGGTGGGTGGCCGCGGGATCCCCAGGCGACCTTCCCCGTGTTTGAGTAAAGCCTCTCCCAGGAGCAGC
 CTTCTTGCCGTGCTCTCTCGAGGTCAGGACGCGAGAGGAAGGCGC
 >ARGH1 Transcriptional regulartor
-ATCCAGGGCGATTCAGAGGGCCCCGGGCCACGTTATCTCGGCGCTGGTTTCGCGCTGGTTTCGCGCTGGTTTCGCG
+ATCCAGGGCGATTCAGAGGGCCCCGGGCCACGTTATCTCGGCGCTGGTTTCGCGCTGGTTTCGCGCTGGTTTCGC
 CTGGTTTCC
 ```
  
- For sure, there are tons of ways to solve this. E.g. using a tool called `samtools faidx` with downstream filtering of it's output using `awk`. Or by reformating the commonly multi-line fasta into single, line via `perl` plus some `awk` and so on. [BioPyton](https://github.com/biopython/biopython.github.io/) or [BioPerl](http://bioperl.org/) also do the trick, are very readable, but require installation and additional setup efforts.
+ For sure, there are tons of [ways to solve(https://www.biostars.org/p/79202/) this problem. E.g. using a tool called `samtools faidx` with downstream filtering of it's output using `awk`. Or by reformating the commonly multi-line fasta into single, line via `perl` plus some `awk` and so on. [BioPyton](https://github.com/biopython/biopython.github.io/) or [BioPerl](http://bioperl.org/) also do the trick, are very readable, but require installation and additional setup efforts.
 
 To allow for **0-installation scriptlets** that do their own automatic dependency resolution, `kscript` comes to rescue. Here's a  Kotlin solution for the filter problem from above, which we'll work through step by step:
  
