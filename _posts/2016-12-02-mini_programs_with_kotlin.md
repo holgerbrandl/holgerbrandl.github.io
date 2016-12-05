@@ -97,7 +97,7 @@ fasta_length_filter ~/test.fasta 20 > filtered.fasta
 
 When being invoked without arguments `fasta_length_filter` will provide just the usage info.
 
-Depending on the users' preference the URL could point either to the master revision of the gist or to a particular revision for better reproducibility. Since the scriplet is versioned along with its dependencies (which ware fetched via `maven`), this approach does not depend on API stability for the external libraries being used -- a common problem which is tedious to overcome when working with python, R or perl! In contrast `kscript` solutions provide absolute **long-term stability** (within the limits of a hardly ever changing JVM and the kotlin compiler).
+Depending on the users' preference the URL could point either to the master revision of the gist or to a particular revision for better reproducibility. Since the scriplet is versioned along with its dependencies (which are fetched via `maven`), this approach does not depend on API stability for the external libraries being used -- a common problem which is tedious to overcome when working with python, R or perl! In contrast `kscript` solutions provide absolute **long-term stability** (within the limits of a hardly ever changing JVM and the kotlin compiler).
 
 In this post I've discussed how to write versioned, bootstrapping mini-programs using `kscript` and `Kotlin`. In my next posting I'll talk about the support APi for `kscript` to allow for `awk`-like one-liners written in Kotlin to please they eye instead of being confusing and `aw(k)`ful.
  
