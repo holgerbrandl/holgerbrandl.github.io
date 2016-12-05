@@ -67,18 +67,21 @@ To allow for **0-installation scriptlets** that do their own automatic dependenc
 
 Because of Kotlin's nice and concise collections API and syntax, the solution should be readable almost even to non-developers. ;-)
 
-Previously `kscript` allowed to run such scriptlets either from a file or inlined (See its [docs]((https://github.com/holgerbrandl/kscript)) for more examples):
 
-```bash
-## simply read the script from stdin
-echo 'println("hello world")' | kscript -
+Previously `kscript` allowed to run such scriptlets either from a file or inlined into a workflow-script (see its [docs](https://github.com/holgerbrandl/kscript) for examples), or most naturally by by declaring `kscript` as scripting engine in the shebang line:
 
-## or read it from a file
-echo 'println("hello world")' > test.kts
-kscript test.kts
+```kotlin
+#!/usr/bin/env kscript
+
+//DEPS de.mpicbg.scicomp:kutils:0.4
+//KOTLIN_OPTS -J-Xmx2g
+ 
+import de.mpicbg.scicomp.bioinfo.openFasta
+# ... rest from above
+
 ```
 
-However, since recently `kscript` also can **now also read URLs** which elevates its usage to a new level: The fasta length filter scriplet from above was deposited as a [gist](https://gist.github.com/holgerbrandl/521a5e9b1eb0d5b443b82cf13f66074f) on github, and we can now simply write
+However, since recently `kscript` also can **read URLs** which elevates its usage to a new level: The fasta length filter scriplet from above was deposited as a [gist](https://gist.github.com/holgerbrandl/521a5e9b1eb0d5b443b82cf13f66074f) on github, and we can now simply write
 
 ```bash
 kscript https://git.io/v1ZUY test.fasta 20 > filtered.fasta
