@@ -77,7 +77,7 @@ Previously `kscript` allowed to run such scriptlets either from a file or inline
 //KOTLIN_OPTS -J-Xmx2g
  
 import de.mpicbg.scicomp.bioinfo.openFasta
-# ... rest from above
+// ... rest from above
 
 ```
 
