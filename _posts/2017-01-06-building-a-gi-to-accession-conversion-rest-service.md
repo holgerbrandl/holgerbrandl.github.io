@@ -6,7 +6,7 @@ categories: [kotlin]
 comments: true
 ---
 
-Recently, the [NCBI retired ](https://www.ncbi.nlm.nih.gov/news/03-02-2016-phase-out-of-GI-numbers/)the well known GI numbers in favor of the more structured accession numbers. To allow users to still convert existing data, they [provide](https://ncbiinsights.ncbi.nlm.nih.gov/2016/12/23/converting-lots-of-gi-numbers-to-accession-version/) a python 40gb lmdb database along with a little python program to extract the data. However, since it's rather tedious to pull a 40gb file, and make sure to have all required python dependencies, we would like to wrap this conversion model into a small REST service.
+Recently, the [NCBI retired ](https://www.ncbi.nlm.nih.gov/news/03-02-2016-phase-out-of-GI-numbers/)the well known GI numbers in favor of the more structured accession numbers. To allow users to still convert existing data, they [provide](https://ncbiinsights.ncbi.nlm.nih.gov/2016/12/23/converting-lots-of-gi-numbers-to-accession-version/) a  40gb database dump along with a little python program to extract the data. However, since it's rather tedious to pull such a massive file, and to make sure to have all required python dependencies, we would like to wrap this conversion model into a small REST service. We also  discuss in this post how to integrate this microservice with R, bash and kscript. 
  
 
 ## Prepare the mapping model
@@ -268,7 +268,7 @@ gi2acc 23 324 534
 
 With little effort we could build, and deploy a spring-boot application providing a REST service for GI to accession number conversion. Because of Kotlin's more flexible design we could keep things together in a single source file. We walked through different integrations using R, the shell, and Kotlin.
 
-The complete code is available unter https://github.com/holgerbrandl/gi2accession
+The complete code is available unter [https://github.com/holgerbrandl/gi2accession](https://github.com/holgerbrandl/gi2accession)
 
 The described conversion service can be used via the following URL:
 ```
