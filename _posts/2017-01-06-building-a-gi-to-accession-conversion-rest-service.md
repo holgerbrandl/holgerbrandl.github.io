@@ -79,7 +79,9 @@ class IdConversionController {
                         IdPair(it.split(" ")[0].toLong(), null, null)
                     } else {
                         // example line: 34	X17614.1	1632
-                        with(it.split('\t')) { IdPair(this[0].toLong(), this[1], this[2].toLong()) }
+                        with(it.split('\t')) { 
+                            IdPair(this[0].toLong(), this[1], this[2].toLong()) 
+                        }
                     }
                 }
 
@@ -240,7 +242,9 @@ val json = String(queryURL.httpGet().response().second.data)
 val jsonArray = Parser().parse(json.byteInputStream())!! as JsonArray<*>
 
 // use klaxon library to parse the json result (see https://github.com/cbeust/klaxon)
-val idMap = jsonArray.map { (it as JsonObject) }.map { it.int("gi") to it.string("accession") }
+val idMap = jsonArray.map { (it as JsonObject) }.map { 
+    it.int("gi") to it.string("accession") 
+}
 
 // print conversion table
 idMap.forEach { println(it) }
