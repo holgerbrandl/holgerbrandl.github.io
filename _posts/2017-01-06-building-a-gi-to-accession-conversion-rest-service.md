@@ -45,7 +45,8 @@ The general concept about to get started with REST, Spring-Boot and Kotlin is de
 * http://ssoudan.eu/posts/2014-12-08-kotlin-springboot.html
 
 So essentially all we need is a single method taking one or more GIs and returning a mapping scheme:
-```{kotlin}
+
+```kotlin
 // value type to model python-script output
 data class IdPair(val gi: Long, val accession: String?, val seqLength: Long?)
 
@@ -107,6 +108,7 @@ We notice and welcome the surprisingly little amount of boilerplate code require
 To test the app locally we can use use `http://localhost:7050/gi2acc?gi=42` or `http://localhost:7050/gi2acc?gi=123,222, 232,3` for multiple IDs.
 
 To check if also invalid GI are handled gracefully we can mix in an invalid id `http://localhost:7050/gi2acc?gi=23,5353,34`, which gives:
+
 ```json
 [
   {
@@ -172,6 +174,7 @@ Finally, we'd lik to use our new GI to accession conversion microservice. Since 
 ### How to integrate with R?
 
 Using the conversion webservice from R can be easily done using [httr](https://github.com/hadley/httr) + [dplyr](https://github.com/hadley/dplyr) mixed with a bit of [purr](https://github.com/hadley/purrr):
+
 ```r
 library(httr)
 library(tidyverse)
@@ -265,7 +268,7 @@ gi2acc 23 324 534
 
 With little effort we could build, and deploy a spring-boot application providing a REST service for GI to accession number conversion. Because of Kotlin's more flexible design we could keep things together in a single source file. We walked through different integrations using R, the shell, and Kotlin.
 
-The complete code is available unter https://github.com/holgerbrandl/gi2acc_service
+The complete code is available unter https://github.com/holgerbrandl/gi2accession
 
 The described conversion service can be used via the following URL:
 ```
