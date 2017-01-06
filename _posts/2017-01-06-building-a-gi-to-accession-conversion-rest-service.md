@@ -249,7 +249,8 @@ val idMap = jsonArray.map { (it as JsonObject) }.map {
 // print conversion table
 idMap.forEach { println(it) }
 ```
-which gives
+which outputs
+
 ```
 (23, X53811.1)
 (5353, null)
