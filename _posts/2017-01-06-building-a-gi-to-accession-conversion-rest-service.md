@@ -178,7 +178,6 @@ Using the conversion webservice from R can be easily done using [httr](https://g
 ```r
 library(httr)
 library(tidyverse)
-library(dplyr)
 
 ## define the queries
 GIs = list(23,5353,34)
@@ -210,9 +209,11 @@ http://stackoverflow.com/questions/32960857/how-to-convert-arbirtrary-simple-jso
 # install jq if not yet present: sudo apt-get install jq
 gi_nr=24,323
 
-curl -s "http://bioinfo.mpi-cbg.de:7050/gi2acc?gi=$gi_nr" | jq -r '(.[0] | keys) as $keys | $keys, map([.[ $keys[] ]])[] | @csv'
+curl -s "http://bioinfo.mpi-cbg.de:7050/gi2acc?gi=$gi_nr" | \
+    jq -r '(.[0] | keys) as $keys | $keys, map([.[ $keys[] ]])[] | @csv'
 ```
 which gives
+
 ```
 "accession","gi","seqLength"
 "X53812.1",24,422
