@@ -40,11 +40,11 @@ To avoid this tedious setup whenever we need to convert GIs, we now would like t
 
 The general concept about to get started with REST, Spring-Boot and Kotlin is described in 
 
-* https://spring.io/blog/2016/02/15/developing-spring-boot-applications-with-kotlin
-* http://www.thedevpiece.com/building-microservices-with-kotlin-and-springboot/
-* http://ssoudan.eu/posts/2014-12-08-kotlin-springboot.html
+* [https://spring.io/blog/2016/02/15/developing-spring-boot-applications-with-kotlin](https://spring.io/blog/2016/02/15/developing-spring-boot-applications-with-kotlin)
+* [http://www.thedevpiece.com/building-microservices-with-kotlin-and-springboot/](http://www.thedevpiece.com/building-microservices-with-kotlin-and-springboot/)
+* [http://ssoudan.eu/posts/2014-12-08-kotlin-springboot.html](http://ssoudan.eu/posts/2014-12-08-kotlin-springboot.html)
 
-So essentially all we need is a single method taking one or more GIs and returning a mapping scheme:
+So essentially all we need is a single method that accepts one or more GIs as input and which returns a mapping scheme.
 
 ```kotlin
 // value type to model python-script output
