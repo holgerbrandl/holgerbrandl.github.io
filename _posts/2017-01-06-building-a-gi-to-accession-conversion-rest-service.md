@@ -277,6 +277,7 @@ With little effort we could build, and deploy a spring-boot application providin
 The complete code is available unter [https://github.com/holgerbrandl/gi2accession](https://github.com/holgerbrandl/gi2accession)
 
 The described conversion service can be used via the following URL:
+
 ```
 http://java-srv1.mpi-cbg.de:7050/gi2acc?gi=23,5353,34
 ```
