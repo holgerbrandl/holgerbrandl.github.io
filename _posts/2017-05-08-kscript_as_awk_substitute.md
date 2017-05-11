@@ -53,7 +53,7 @@ The `kscript` solution is using Kotlin to implement the same functionality and i
 
 When a one-liner is provided as script argument to `kscript`, it will add the following prefix header
 ```kotlin
-kscript '//DEPS de.mpicbg.scicomp:kscript:1.2
+//DEPS de.mpicbg.scicomp:kscript:1.2
 import kscript.text.*
 val lines = resolveArgFile(args)
 ```
@@ -78,7 +78,20 @@ Separators characters can be optionally provided and default (using kotlin [defa
 
 {% highlight bash %}
 awk '{print $1, $2, "F11-"$7}' some_flights.tsv
+{% endhighlight %}
 
+
+
+
+{% highlight text %}
+## year month F11-arr_time
+## 2013 1 F11-830
+## 2013 1 F11-850
+## 2013 1 F11-923
+## 2013 1 F11-1004
+{% endhighlight %}
+
+{% highlight bash %}
 kscript 'lines.split().map { listOf(it[1], it[2], "F11-"+ it[7]) }.print()' some_flights.tsv 
 {% endhighlight %}
 
@@ -86,17 +99,13 @@ kscript 'lines.split().map { listOf(it[1], it[2], "F11-"+ it[7]) }.print()' some
 
 
 {% highlight text %}
-Bash> year month F11-arr_time
-Bash> 2013 1 F11-830
-Bash> 2013 1 F11-850
-Bash> 2013 1 F11-923
-Bash> 2013 1 F11-1004
-Bash> month	day	F11-sched_arr_time
-Bash> 1	1	F11-819
-Bash> 1	1	F11-830
-Bash> 1	1	F11-850
-Bash> 1	1	F11-1022
+## month	day	F11-sched_arr_time
+## 1	1	F11-819
+## 1	1	F11-830
+## 1	1	F11-850
+## 1	1	F11-1022
 {% endhighlight %}
+Note that `kscript` is keeping the tab as a delimter for the output.
 
 * [Delete a column](http://stackoverflow.com/questions/15361632/delete-a-column-with-awk-or-sed)
 
@@ -106,6 +115,7 @@ awk '!($3="")'  some_flights.tsv
 
 kscript 'lines.split().select(-3).print()' some_flights.tsv 
 {% endhighlight %}
+As pointed out in the link, the `awk` solution is flawed and may not work for all types of input data. There also does not seem to be a generic `awk` solution to this problem. (`cut` will do it though)
 
 * Number lines (from [here](http://tuxgraphics.org/~guido/scripts/awk-one-liner.html))
 
@@ -171,9 +181,9 @@ time awk '{print $10, $1, $12}' flights.tsv > /dev/null
 {% highlight text %}
 ##   336777 flights.tsv
 ## 
-## real	0m1.843s
-## user	0m1.802s
-## sys	0m0.029s
+## real	0m5.602s
+## user	0m2.998s
+## sys	0m0.097s
 {% endhighlight %}
 
 {% highlight bash %}
@@ -185,9 +195,9 @@ time kscript 'lines.split().select(10,1,12).print()' flights.tsv > /dev/null
 
 {% highlight text %}
 ## 
-## real	0m1.811s
-## user	0m2.017s
-## sys	0m0.432s
+## real	0m6.525s
+## user	0m3.688s
+## sys	0m0.822s
 {% endhighlight %}
 Both solutions do not differ signifcantly in runtime. However, this actually means that  `kscript` is processing the data faster, because we loose around 350ms because of the JVM startup. To illustrate that point we redo the benchmark with 20x of the data.
 

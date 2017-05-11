@@ -20,6 +20,8 @@ github_username:  holgerbrandl
 title : Let data flow not stumble
 description: Meditations on Data, R, Kotlin and the universe
 
+layout: splash
+
 # Build settings
 markdown: kramdown
 theme: minima
@@ -28,3 +30,6 @@ gems:
 exclude:
   - Gemfile
   - Gemfile.lock
+
+disqus:
+    shortname: 'let-data-flow-not-stumble'
