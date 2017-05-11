@@ -99,11 +99,11 @@ kscript 'lines.split().map { listOf(it[1], it[2], "F11-"+ it[7]) }.print()' some
 
 
 {% highlight text %}
-## month	day	F11-sched_arr_time
-## 1	1	F11-819
-## 1	1	F11-830
-## 1	1	F11-850
-## 1	1	F11-1022
+## year	month	F11-arr_time
+## 2013	1	F11-830
+## 2013	1	F11-850
+## 2013	1	F11-923
+## 2013	1	F11-1004
 {% endhighlight %}
 Note that `kscript` is keeping the tab as a delimter for the output.
 
@@ -141,7 +141,7 @@ kscript 'lines.map { it.trim() }.print()' file.txt
 {% highlight bash %}
 awk '/start/,/stop/' file.txt
 
-kscript 'lines.dropWhile { it.startsWith("foo") }.takeWhile { it.startsWith("bar") }.print()' file.txt
+kscript 'lines.dropWhile { it.startsWith("foo") }.takeWhile { !it.startsWith("bar") }.print()' file.txt
 {% endhighlight %}
 
 
@@ -181,9 +181,9 @@ time awk '{print $10, $1, $12}' flights.tsv > /dev/null
 {% highlight text %}
 ##   336777 flights.tsv
 ## 
-## real	0m1.755s
-## user	0m1.719s
-## sys	0m0.021s
+## real	0m1.792s
+## user	0m1.759s
+## sys	0m0.023s
 {% endhighlight %}
 
 {% highlight bash %}
@@ -195,11 +195,11 @@ time kscript 'lines.split().select(10,1,12).print()' flights.tsv > /dev/null
 
 {% highlight text %}
 ## 
-## real	0m1.617s
-## user	0m1.891s
-## sys	0m0.391s
+## real	0m1.785s
+## user	0m1.937s
+## sys	0m0.433s
 {% endhighlight %}
-Both solutions do not differ signifcantly in runtime. However, this actually means that  `kscript` is processing the data faster, because we loose around 350ms because of the JVM startup. To illustrate that point we redo the benchmark with 20x of the data.
+Both solutions do not differ signifcantly in runtime. However, this actually means that  `kscript` is processing the data faster, because we loose around 350ms for the JVM startup. To illustrate that point we redo the benchmark with 20x of the data.
 
 
 {% highlight bash %}
@@ -213,9 +213,9 @@ time awk '{print $10, $1, $12}' many_flights.tsv > /dev/null
 
 {% highlight text %}
 ## 
-## real	0m35.250s
-## user	0m34.615s
-## sys	0m0.433s
+## real	0m35.380s
+## user	0m34.834s
+## sys	0m0.440s
 {% endhighlight %}
 
 {% highlight bash %}
@@ -227,14 +227,14 @@ time kscript 'lines.split().select(10,1,12).print()' many_flights.tsv > /dev/nul
 
 {% highlight text %}
 ## 
-## real	0m24.305s
-## user	0m20.069s
-## sys	0m5.401s
+## real	0m23.678s
+## user	0m19.483s
+## sys	0m5.254s
 {% endhighlight %}
 For the tested usecase, __`kscript` seems more than 30% faster than `awk`__. Long live the JIT compiler! :-)
 
 
-## Conceptual Clarity vs Convenience
+## Conceptual Clarity vs. Convenience
 
 One of the core motivations for the development of `kscript` is **long-term stability** of `kscript`lets. However, by adding a prefix header including a versioned dependency for the [kscript support API](https://github.com/holgerbrandl/kscript-support-api) we are somehow condemned to either stick to the current version of the support api for all times, or to hope that gradual improvements do not break existing kscript solutions. Neither option does sound appealing.
 
@@ -262,9 +262,9 @@ Opinions and suggestions on this feature are welcome!
 
 ## Summary
 
-As we have discussed above, `kscript` can be used as a drop-in replacement for awk in situations where `awk` solutions would become overly clumsy. By allowing for standard _Kotlin_ to write little pieces of shell processing logic, we can avoid installing external dedicated tools in many situations. Although, `kscript`s written in _Kotlin_ are slightly more verbose than `awk` code, they are more readable and allow to express more complex data flow logic.
+As we have discussed above, `kscript` can be used as a drop-in replacement for `awk` in situations where `awk` solutions would become overly clumsy. By allowing for standard _Kotlin_ to write little pieces of shell processing logic, we can avoid installing external dedicated tools in many situations. Although, `kscript`s written in _Kotlin_ are slightly more verbose than `awk` code, they are more readable and allow to express more complex data flow logic.
 
-Whereas as table streaming is certainly possible with `kscript` and beneficial in some situations, its true _true power_ is the handling of more complex data-types, such as  _json_, and _xml_, and domain specific data like _fasta_ or alignment files in bioinformatics. Because of the built-in dependency resolution in `kscript` third party libraries can be easily used in short self-contained mini-programs, which allows to cover a wide range of application domains. We plan to discuss more examples in our next article.
+Whereas as table streaming is certainly possible with `kscript` and beneficial in some situations, its _true power_ is the handling of more complex data-types, such as  _json_, and _xml_, and domain specific data like _fasta_ or alignment files in bioinformatics. Because of the built-in dependency resolution in `kscript` third party libraries can be easily used in short self-contained mini-programs, which allows to cover a wide range of application domains. We plan to discuss more examples in our next article.
 
 
 Thanks for reading, and feel welcome to post questions or comments.
