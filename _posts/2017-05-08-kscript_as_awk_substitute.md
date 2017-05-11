@@ -63,7 +63,7 @@ The resulting script will [be processed](https://github.com/holgerbrandl/kscript
 
 In the example above several other elements of the [`kscript` support library](https://github.com/holgerbrandl/kscript-support-api) are used:
 
-* [`split()`](https://github.com/holgerbrandl/kscript-support-api/blob/1ecbdeecaa68d57a8b2365a42995d7ce3bee28a0/src/main/kotlin/kscript/text/Tables.kt#L37-L37) - Splits the lines of an input stream into [Row](https://github.com/holgerbrandl/kscript-support-api/blob/1ecbdeecaa68d57a8b2365a42995d7ce3bee28a0/src/main/kotlin/kscript/text/Tables.kt#L26)s. The latter are just a [typealias](https://kotlinlang.org/docs/reference/type-aliases.html) for `List<String>`
+* [`split()`](https://github.com/holgerbrandl/kscript-support-api/blob/1ecbdeecaa68d57a8b2365a42995d7ce3bee28a0/src/main/kotlin/kscript/text/Tables.kt#L37-L37) - Splits the lines of an input stream into [Row](https://github.com/holgerbrandl/kscript-support-api/blob/b1ac7741638b9513629bacfc5c1820e17d5354a6/src/main/kotlin/kscript/text/Tables.kt#L28-L28)s. The latter are just a [delegate](https://kotlinlang.org/docs/reference/delegation.html) for `List<String>`
 * [`select()`](https://github.com/holgerbrandl/kscript-support-api/blob/1ecbdeecaa68d57a8b2365a42995d7ce3bee28a0/src/main/kotlin/kscript/text/Tables.kt#L109) - Allows to perform positive and negative column selection.  Range and index syntax, and combinations of both are supported.
 * [`print()`](https://github.com/holgerbrandl/kscript-support-api/blob/1ecbdeecaa68d57a8b2365a42995d7ce3bee28a0/src/main/kotlin/kscript/text/Tables.kt#L64) - Joins rows and prints them to `stdout`
 
@@ -106,6 +106,8 @@ kscript 'lines.split().map { listOf(it[1], it[2], "F11-"+ it[7]) }.print()' some
 ## 2013	1	F11-1004
 {% endhighlight %}
 Note that `kscript` is keeping the tab as a delimter for the output.
+
+To allow for an easy transition between `awk` and `kscript.text.*` the API is using 1-based array access for the columns in the input [Row](https://github.com/holgerbrandl/kscript-support-api/blob/b1ac7741638b9513629bacfc5c1820e17d5354a6/src/main/kotlin/kscript/text/Tables.kt#L28)s. I.e. the third column is selected with `lines.split().map { it[3] }` and `select(3)`.
 
 * [Delete a column](http://stackoverflow.com/questions/15361632/delete-a-column-with-awk-or-sed)
 
@@ -181,9 +183,9 @@ time awk '{print $10, $1, $12}' flights.tsv > /dev/null
 {% highlight text %}
 ##   336777 flights.tsv
 ## 
-## real	0m1.792s
-## user	0m1.759s
-## sys	0m0.023s
+## real	0m1.739s
+## user	0m1.720s
+## sys	0m0.015s
 {% endhighlight %}
 
 {% highlight bash %}
@@ -195,9 +197,9 @@ time kscript 'lines.split().select(10,1,12).print()' flights.tsv > /dev/null
 
 {% highlight text %}
 ## 
-## real	0m1.785s
-## user	0m1.937s
-## sys	0m0.433s
+## real	0m1.625s
+## user	0m1.881s
+## sys	0m0.373s
 {% endhighlight %}
 Both solutions do not differ signifcantly in runtime. However, this actually means that  `kscript` is processing the data faster, because we loose around 350ms for the JVM startup. To illustrate that point we redo the benchmark with 20x of the data.
 
@@ -213,9 +215,9 @@ time awk '{print $10, $1, $12}' many_flights.tsv > /dev/null
 
 {% highlight text %}
 ## 
-## real	0m35.380s
-## user	0m34.834s
-## sys	0m0.440s
+## real	0m40.683s
+## user	0m38.753s
+## sys	0m1.172s
 {% endhighlight %}
 
 {% highlight bash %}
@@ -227,9 +229,9 @@ time kscript 'lines.split().select(10,1,12).print()' many_flights.tsv > /dev/nul
 
 {% highlight text %}
 ## 
-## real	0m23.678s
-## user	0m19.483s
-## sys	0m5.254s
+## real	0m23.211s
+## user	0m19.386s
+## sys	0m4.898s
 {% endhighlight %}
 For the tested usecase, __`kscript` seems more than 30% faster than `awk`__. Long live the JIT compiler! :-)
 
