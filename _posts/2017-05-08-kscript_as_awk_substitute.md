@@ -181,9 +181,9 @@ time awk '{print $10, $1, $12}' flights.tsv > /dev/null
 {% highlight text %}
 ##   336777 flights.tsv
 ## 
-## real	0m5.602s
-## user	0m2.998s
-## sys	0m0.097s
+## real	0m1.775s
+## user	0m1.744s
+## sys	0m0.023s
 {% endhighlight %}
 
 {% highlight bash %}
@@ -195,9 +195,9 @@ time kscript 'lines.split().select(10,1,12).print()' flights.tsv > /dev/null
 
 {% highlight text %}
 ## 
-## real	0m6.525s
-## user	0m3.688s
-## sys	0m0.822s
+## real	0m1.614s
+## user	0m1.870s
+## sys	0m0.395s
 {% endhighlight %}
 Both solutions do not differ signifcantly in runtime. However, this actually means that  `kscript` is processing the data faster, because we loose around 350ms because of the JVM startup. To illustrate that point we redo the benchmark with 20x of the data.
 
@@ -220,19 +220,36 @@ One of the core motivations for the development of `kscript` is **long-term stab
 
 Because of that, we still consider to replace/drop the support for automatic prefixing of one-liners. The more verbose solution including the prefix-header would be fixed (and thus long-term stable) even if we evolve the support API, but for sure conciseness would suffer a  lot. See yourself:
 
-```
+
+{% highlight bash %}
 kscript 'lines.split().select(with(1..3).and(3)).print()' file.txt
-```
+{% endhighlight %}
+
+
+
+
+{% highlight text %}
+## [ERROR] Can not read from 'file.txt'
+{% endhighlight %}
 vs.
 
-```
+
+{% highlight bash %}
 kscript '//DEPS de.mpicbg.scicomp:kscript:1.2
 import kscript.text.*
 val lines = resolveArgFile(args)
 
 lines split().select(with(1..3).and(3)).print()
 '
-```
+{% endhighlight %}
+
+
+
+
+{% highlight text %}
+## Failed to lookup dependencies. Maven reported the following error:
+## [ERROR] Failed to execute goal on project maven_template: Could not resolve dependencies for project kscript:maven_template:jar:1.0: Could not find artifact de.mpicbg.scicomp:kscript:jar:1.2 in jcenter (http://jcenter.bintray.com/) -> [Help 1]
+{% endhighlight %}
 Readability would be better in the latter case because it is a self-contained Kotlin application.
 
 Opinions and suggestions on this feature are welcome!

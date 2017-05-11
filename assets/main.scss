@@ -1,0 +1,41 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+//see https://github.com/jekyll/minima/issues/95
+
+@import "minima";
+
+pre, code {
+  font-size: 15px;
+  border: 1px solid #e8e8e8;
+  border-radius: 3px;
+  background-color: #f1f1f1;
+}
+
+
+h1, h2, h3 {
+  color: firebrick;
+}
+
+div {
+  max-width: 100%;
+}
+
+.full-width {
+  background-size: auto 100%;
+}
+
+.highlighter-rouge .highlight {
+  background: #f1f1f1;
+}
+
+
+
+.highlight .s1 {
+  color: #009e28;
+}
+
+.wrapper{
+  max-width: calc(1200px - (30px * 2))
+}
