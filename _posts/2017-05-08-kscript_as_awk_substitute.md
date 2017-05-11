@@ -7,14 +7,14 @@ comments: true
 ---
 
 
-Among other [recently added](https://github.com/holgerbrandl/kscript/blob/master/NEWS.md#v13) features, [`kscript`](https://github.com/holgerbrandl/kscript) does now accept scripts as arguments. Facilitated by its [support library](https://github.com/holgerbrandl/kscript#support-api), this makes it possible to use it in an `awk`-like fashion. And although `kscript` is more designed for more complex _self-contained micro-applications_, it is still interesting to compare both tools with respect to tabular data processing.
+Among other [recently added](https://github.com/holgerbrandl/kscript/blob/master/NEWS.md#v13) features, [`kscript`](https://github.com/holgerbrandl/kscript) does now accept scripts as arguments. Facilitated by its [support library](https://github.com/holgerbrandl/kscript#support-api), this makes it possible to use it in an `awk`-like fashion. And although `kscript` is more designed for more complex _self-contained longterm-stable installation-free micro-applications_ (see [here](https://git.mpi-cbg.de/bioinfo/ngs_tools/blob/master/dge_workflow/star_align.kts) or [there](https://github.com/holgerbrandl/kscript/blob/master/examples/classpath_example.kts) for examples), it is still interesting to compare both tools with respect to tabular data processing.
 
 
-So let's get started. A common usecase of `awk` selecting columns:
+So let's get started. A common usecase for `awk` is selecting columns:
 
 
 {% highlight bash %}
-# fetech some example data
+# fetch some example data
 # wget -O flights.tsv https://git.io/v9MjZ
 # head  -n 5 flights.tsv > some_flights.tsv 
 awk -v OFS='\t' '{print $10, $1, $12}' some_flights.tsv
@@ -47,7 +47,7 @@ kscript 'lines.split().select(10,1,12).print()' some_flights.tsv
 ## B6	2013	N804JB
 {% endhighlight %}
 
-The `kscript` solution is using Kotlin to implement the same functionality and is just slightly more verbose.
+The `kscript` solution is using [_Kotlin_](https://kotlinlang.org/) to implement the same functionality and is just slightly more verbose.
 
 ## How does it work?
 
@@ -57,7 +57,7 @@ When a one-liner is provided as script argument to `kscript`, it will add the fo
 import kscript.text.*
 val lines = resolveArgFile(args)
 ```
-The header serves 2 purposes. First it imports the support methods from [`kscript.text`](https://github.com/holgerbrandl/kscript-support-api/tree/master/src/main/kotlin/kscript/text). Second, it resolves the data input which is assumed either an argument file or `stdin` into a `Sequence<String>` named `lines`.
+The header serves 2 purposes. First it imports the support methods from [`kscript.text`](https://github.com/holgerbrandl/kscript-support-api/tree/master/src/main/kotlin/kscript/text). Second, it resolves the data input which is assumed to be either an argument file or `stdin` into a `Sequence<String>` named `lines`.
 
 The resulting script will [be processed](https://github.com/holgerbrandl/kscript#inlined-usage) like any other by `kscript`.
 
@@ -162,7 +162,7 @@ awk '{print NR,"->",NF}' file.txt
 kscript 'lines.split().mapIndexed { index, row -> index.toString() + " -> " + row.size }.print()'
 {% endhighlight %}
 
-So as we can see we can just use regular _Kotlin_ to solve most `awk` use-cases easily. And keep in mind that `kscript` is not meant to be _just_ a table processor, for which we pay here with an extra in verbosity (which could be refactored into more specialized support library methods, but which is kept for sake of readability).
+As shown in the examples, we can just use regular _Kotlin_ to solve most `awk` use-cases easily. And keep in mind that `kscript` is not meant to be _just_ a table processor, for which we pay here with an extra in verbosity. The latter could be refactored into more specialized support library methods if needed/wanted, but which is intended for now to improve readability.
 
 
 ## Performance
@@ -181,9 +181,9 @@ time awk '{print $10, $1, $12}' flights.tsv > /dev/null
 {% highlight text %}
 ##   336777 flights.tsv
 ## 
-## real	0m1.775s
-## user	0m1.744s
-## sys	0m0.023s
+## real	0m1.792s
+## user	0m1.753s
+## sys	0m0.024s
 {% endhighlight %}
 
 {% highlight bash %}
@@ -195,9 +195,9 @@ time kscript 'lines.split().select(10,1,12).print()' flights.tsv > /dev/null
 
 {% highlight text %}
 ## 
-## real	0m1.614s
-## user	0m1.870s
-## sys	0m0.395s
+## real	0m1.832s
+## user	0m2.122s
+## sys	0m0.441s
 {% endhighlight %}
 Both solutions do not differ signifcantly in runtime. However, this actually means that  `kscript` is processing the data faster, because we loose around 350ms because of the JVM startup. To illustrate that point we redo the benchmark with 20x of the data.
 
@@ -208,8 +208,28 @@ Both solutions do not differ signifcantly in runtime. However, this actually mea
 time awk '{print $10, $1, $12}' many_flights.tsv > /dev/null
 {% endhighlight %}
 
+
+
+
+{% highlight text %}
+## 
+## real	0m39.776s
+## user	0m37.100s
+## sys	0m0.573s
+{% endhighlight %}
+
 {% highlight bash %}
 time kscript 'lines.split().select(10,1,12).print()' many_flights.tsv > /dev/null
+{% endhighlight %}
+
+
+
+
+{% highlight text %}
+## 
+## real	0m22.976s
+## user	0m19.076s
+## sys	0m4.873s
 {% endhighlight %}
 For the tested usecase, __`kscript` seems more than 30% faster than `awk`__. Long live the JIT compiler! :-)
 
@@ -218,18 +238,11 @@ For the tested usecase, __`kscript` seems more than 30% faster than `awk`__. Lon
 
 One of the core motivations for the development of `kscript` is **long-term stability** of `kscript`lets. However, by adding a prefix header including a versioned dependency for the [kscript support API](https://github.com/holgerbrandl/kscript-support-api) we are somehow condemned to either stick to the current version of the support api for all times, or to hope that gradual improvements do not break existing kscript solutions. Neither option does sound appealing.
 
-Because of that, we still consider to replace/drop the support for automatic prefixing of one-liners. The more verbose solution including the prefix-header would be fixed (and thus long-term stable) even if we evolve the support API, but for sure conciseness would suffer a  lot. See yourself:
+Because of that, we still consider to replace/drop the support for automatic prefixing of one-liners. The more verbose solution including the prefix-header would truely self-contained (and thus long-term stable) even if we evolve the support API, but for sure conciseness would suffer a  lot. See yourself:
 
 
 {% highlight bash %}
 kscript 'lines.split().select(with(1..3).and(3)).print()' file.txt
-{% endhighlight %}
-
-
-
-
-{% highlight text %}
-## [ERROR] Can not read from 'file.txt'
 {% endhighlight %}
 vs.
 
@@ -242,27 +255,19 @@ val lines = resolveArgFile(args)
 lines split().select(with(1..3).and(3)).print()
 '
 {% endhighlight %}
-
-
-
-
-{% highlight text %}
-## Failed to lookup dependencies. Maven reported the following error:
-## [ERROR] Failed to execute goal on project maven_template: Could not resolve dependencies for project kscript:maven_template:jar:1.0: Could not find artifact de.mpicbg.scicomp:kscript:jar:1.2 in jcenter (http://jcenter.bintray.com/) -> [Help 1]
-{% endhighlight %}
-Readability would be better in the latter case because it is a self-contained Kotlin application.
+Readability may be even better in the latter case because it is a self-contained _Kotlin_ application.
 
 Opinions and suggestions on this feature are welcome!
 
 
 ## Summary
 
-As we have discussed above, `kscript` can be used as a drop-in replacement for awk in situations where `awk` solutions would become overly clumsy. By allowing for standard kotlin to write little pieces of shell processing logic, we can avoid installing external dedicated tools in many solutions. Although, `kscript`s written in `Kotlin` are slightly more verbose than `awk` code, they are more readable and allow to express more complex data flow logic.
+As we have discussed above, `kscript` can be used as a drop-in replacement for awk in situations where `awk` solutions would become overly clumsy. By allowing for standard _Kotlin_ to write little pieces of shell processing logic, we can avoid installing external dedicated tools in many situations. Although, `kscript`s written in _Kotlin_ are slightly more verbose than `awk` code, they are more readable and allow to express more complex data flow logic.
 
-Whereas as table streaming is certainly possible with `kscript` and beneficial in some situations, its true _true power_ is the handling of more complex data-types, such as  _json_, and _xml_, and domain specific data like _fasta_ or alignment files in bioinformatics. Because of the built-in dependency resolution in `kscript` third party libraries can be easily used in short concise mini-programs for a wide range of application domains. We plan to discuss examples in the next article.
+Whereas as table streaming is certainly possible with `kscript` and beneficial in some situations, its true _true power_ is the handling of more complex data-types, such as  _json_, and _xml_, and domain specific data like _fasta_ or alignment files in bioinformatics. Because of the built-in dependency resolution in `kscript` third party libraries can be easily used in short self-contained mini-programs, which allows to cover a wide range of application domains. We plan to discuss more examples in our next article.
 
 
-Feel welcome to post questions or comments.
+THanks for reading, and feel welcome to post questions or comments.
 
 
 {% include comments.html %}
