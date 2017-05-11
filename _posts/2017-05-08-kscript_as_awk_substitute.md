@@ -61,14 +61,14 @@ The header serves 2 purposes. First it imports the support methods from [`kscrip
 
 The resulting script will [be processed](https://github.com/holgerbrandl/kscript#inlined-usage) like any other by `kscript`.
 
-In the example above several other elements of the [`kscript` support library](https://github.com/holgerbrandl/kscript-support-api):
+In the example above several other elements of the [`kscript` support library](https://github.com/holgerbrandl/kscript-support-api) are used:
 
-* [`split()`](https://github.com/holgerbrandl/kscript-support-api/blob/1ecbdeecaa68d57a8b2365a42995d7ce3bee28a0/src/main/kotlin/kscript/text/Tables.kt#L37-L37) - splits the lines of an input stream into [Row](https://github.com/holgerbrandl/kscript-support-api/blob/1ecbdeecaa68d57a8b2365a42995d7ce3bee28a0/src/main/kotlin/kscript/text/Tables.kt#L26)s. The latter are just a [typealias](https://kotlinlang.org/docs/reference/type-aliases.html) for `List<String>`
-* [`select()`](https://github.com/holgerbrandl/kscript-support-api/blob/1ecbdeecaa68d57a8b2365a42995d7ce3bee28a0/src/main/kotlin/kscript/text/Tables.kt#L109) - which allows to perform positive and negative selections. Both range and index syntax and combinations of both are supported.
+* [`split()`](https://github.com/holgerbrandl/kscript-support-api/blob/1ecbdeecaa68d57a8b2365a42995d7ce3bee28a0/src/main/kotlin/kscript/text/Tables.kt#L37-L37) - Splits the lines of an input stream into [Row](https://github.com/holgerbrandl/kscript-support-api/blob/1ecbdeecaa68d57a8b2365a42995d7ce3bee28a0/src/main/kotlin/kscript/text/Tables.kt#L26)s. The latter are just a [typealias](https://kotlinlang.org/docs/reference/type-aliases.html) for `List<String>`
+* [`select()`](https://github.com/holgerbrandl/kscript-support-api/blob/1ecbdeecaa68d57a8b2365a42995d7ce3bee28a0/src/main/kotlin/kscript/text/Tables.kt#L109) - Allows to perform positive and negative column selection.  Range and index syntax, and combinations of both are supported.
 * [`print()`](https://github.com/holgerbrandl/kscript-support-api/blob/1ecbdeecaa68d57a8b2365a42995d7ce3bee28a0/src/main/kotlin/kscript/text/Tables.kt#L64) - Joins rows and prints them to `stdout`
 
 
-Separators characters can be optionally provided and default (using kotlin [default parameters](https://kotlinlang.org/docs/reference/functions.html#default-arguments)) to tab-delimiters.
+Separator characters can be optionally provided and default (using kotlin [default parameters](https://kotlinlang.org/docs/reference/functions.html#default-arguments)) to tab-delimiter.
 
 
 ## Examples
@@ -181,9 +181,9 @@ time awk '{print $10, $1, $12}' flights.tsv > /dev/null
 {% highlight text %}
 ##   336777 flights.tsv
 ## 
-## real	0m1.792s
-## user	0m1.753s
-## sys	0m0.024s
+## real	0m1.755s
+## user	0m1.719s
+## sys	0m0.021s
 {% endhighlight %}
 
 {% highlight bash %}
@@ -195,9 +195,9 @@ time kscript 'lines.split().select(10,1,12).print()' flights.tsv > /dev/null
 
 {% highlight text %}
 ## 
-## real	0m1.832s
-## user	0m2.122s
-## sys	0m0.441s
+## real	0m1.617s
+## user	0m1.891s
+## sys	0m0.391s
 {% endhighlight %}
 Both solutions do not differ signifcantly in runtime. However, this actually means that  `kscript` is processing the data faster, because we loose around 350ms because of the JVM startup. To illustrate that point we redo the benchmark with 20x of the data.
 
@@ -213,9 +213,9 @@ time awk '{print $10, $1, $12}' many_flights.tsv > /dev/null
 
 {% highlight text %}
 ## 
-## real	0m39.776s
-## user	0m37.100s
-## sys	0m0.573s
+## real	0m35.250s
+## user	0m34.615s
+## sys	0m0.433s
 {% endhighlight %}
 
 {% highlight bash %}
@@ -227,9 +227,9 @@ time kscript 'lines.split().select(10,1,12).print()' many_flights.tsv > /dev/nul
 
 {% highlight text %}
 ## 
-## real	0m22.976s
-## user	0m19.076s
-## sys	0m4.873s
+## real	0m24.305s
+## user	0m20.069s
+## sys	0m5.401s
 {% endhighlight %}
 For the tested usecase, __`kscript` seems more than 30% faster than `awk`__. Long live the JIT compiler! :-)
 
@@ -267,7 +267,7 @@ As we have discussed above, `kscript` can be used as a drop-in replacement for a
 Whereas as table streaming is certainly possible with `kscript` and beneficial in some situations, its true _true power_ is the handling of more complex data-types, such as  _json_, and _xml_, and domain specific data like _fasta_ or alignment files in bioinformatics. Because of the built-in dependency resolution in `kscript` third party libraries can be easily used in short self-contained mini-programs, which allows to cover a wide range of application domains. We plan to discuss more examples in our next article.
 
 
-THanks for reading, and feel welcome to post questions or comments.
+Thanks for reading, and feel welcome to post questions or comments.
 
 
 {% include comments.html %}
