@@ -53,7 +53,7 @@ The `kscript` solution is using [_Kotlin_](https://kotlinlang.org/) to implement
 
 When a one-liner is provided as script argument to `kscript`, it will add the following prefix header
 ```kotlin
-//DEPS de.mpicbg.scicomp:kscript:1.2
+//DEPS com.github.holgerbrandl:kscript:1.2
 import kscript.text.*
 val lines = resolveArgFile(args)
 ```
