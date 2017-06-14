@@ -272,4 +272,4 @@ Whereas as table streaming is certainly possible with `kscript` and beneficial i
 Thanks for reading, and feel welcome to post questions or comments.
 
 
-{% include ../_includes/comments.html %}
+{% include comments.html %}
