@@ -53,7 +53,7 @@ The `kscript` solution is using [_Kotlin_](https://kotlinlang.org/) to implement
 
 When a one-liner is provided as script argument to `kscript`, it will add the following prefix header
 ```kotlin
-//DEPS de.mpicbg.scicomp:kscript:1.2
+//DEPS com.github.holgerbrandl:kscript:1.2
 import kscript.text.*
 val lines = resolveArgFile(args)
 ```
@@ -143,7 +143,7 @@ kscript 'lines.map { it.trim() }.print()' file.txt
 {% highlight bash %}
 awk '/start/,/stop/' file.txt
 
-kscript 'lines.dropWhile { it.startsWith("foo") }.takeWhile { !it.startsWith("bar") }.print()' file.txt
+kscript 'lines.dropWhile { it.startsWith("start") }.takeWhile { !it.startsWith("stop") }.print()' file.txt
 {% endhighlight %}
 
 
@@ -161,7 +161,7 @@ kscript 'lines.split(":").map { it[it.size - 1] }.print()' file.txt
 {% highlight bash %}
 awk '{print NR,"->",NF}' file.txt
 
-kscript 'lines.split().mapIndexed { index, row -> index.toString() + " -> " + row.size }.print()'
+kscript 'lines.split().mapIndexed { index, row -> "$index -> " + row.size }.print()'
 {% endhighlight %}
 
 As shown in the examples, we can just use regular _Kotlin_ to solve most `awk` use-cases easily. And keep in mind that `kscript` is not meant to be _just_ a table processor, for which we pay here with an extra in verbosity. The latter could be refactored into more specialized support library methods if needed/wanted, but which is intended for now to improve readability.
@@ -183,9 +183,9 @@ time awk '{print $10, $1, $12}' flights.tsv > /dev/null
 {% highlight text %}
 ##   336777 flights.tsv
 ## 
-## real	0m1.739s
-## user	0m1.720s
-## sys	0m0.015s
+## real	0m1.783s
+## user	0m1.745s
+## sys	0m0.021s
 {% endhighlight %}
 
 {% highlight bash %}
@@ -197,9 +197,9 @@ time kscript 'lines.split().select(10,1,12).print()' flights.tsv > /dev/null
 
 {% highlight text %}
 ## 
-## real	0m1.625s
-## user	0m1.881s
-## sys	0m0.373s
+## real	0m1.548s
+## user	0m1.794s
+## sys	0m0.359s
 {% endhighlight %}
 Both solutions do not differ signifcantly in runtime. However, this actually means that  `kscript` is processing the data faster, because we loose around 350ms for the JVM startup. To illustrate that point we redo the benchmark with 20x of the data.
 
@@ -215,9 +215,9 @@ time awk '{print $10, $1, $12}' many_flights.tsv > /dev/null
 
 {% highlight text %}
 ## 
-## real	0m40.683s
-## user	0m38.753s
-## sys	0m1.172s
+## real	0m34.903s
+## user	0m34.273s
+## sys	0m0.437s
 {% endhighlight %}
 
 {% highlight bash %}
@@ -229,9 +229,9 @@ time kscript 'lines.split().select(10,1,12).print()' many_flights.tsv > /dev/nul
 
 {% highlight text %}
 ## 
-## real	0m23.211s
-## user	0m19.386s
-## sys	0m4.898s
+## real	0m20.265s
+## user	0m16.718s
+## sys	0m4.566s
 {% endhighlight %}
 For the tested usecase, __`kscript` seems more than 30% faster than `awk`__. Long live the JIT compiler! :-)
 
@@ -250,7 +250,7 @@ vs.
 
 
 {% highlight bash %}
-kscript '//DEPS de.mpicbg.scicomp:kscript:1.2
+kscript '//DEPS com.github.holgerbrandl:kscript:1.2
 import kscript.text.*
 val lines = resolveArgFile(args)
 
@@ -272,4 +272,4 @@ Whereas as table streaming is certainly possible with `kscript` and beneficial i
 Thanks for reading, and feel welcome to post questions or comments.
 
 
-{% include comments.html %}
+{% include ../../_includes/comments.html %}
