@@ -33,7 +33,7 @@ awk -v OFS='\t' '{print $10, $1, $12}' some_flights.tsv
 To do the same with `kscript` we can do the following
 
 {% highlight bash %}
-kscript 'lines.split().select(10,1,12).print()' some_flights.tsv 
+kscript -t 'lines.split().select(10,1,12).print()' some_flights.tsv 
 {% endhighlight %}
 
 
@@ -92,7 +92,7 @@ awk '{print $1, $2, "F11-"$7}' some_flights.tsv
 {% endhighlight %}
 
 {% highlight bash %}
-kscript 'lines.split().map { listOf(it[1], it[2], "F11-"+ it[7]) }.print()' some_flights.tsv 
+kscript -t 'lines.split().map { listOf(it[1], it[2], "F11-"+ it[7]) }.print()' some_flights.tsv 
 {% endhighlight %}
 
 
@@ -115,7 +115,7 @@ To allow for an easy transition between `awk` and `kscript.text.*` the API is us
 {% highlight bash %}
 awk '!($3="")'  some_flights.tsv
 
-kscript 'lines.split().select(-3).print()' some_flights.tsv 
+kscript -t 'lines.split().select(-3).print()' some_flights.tsv 
 {% endhighlight %}
 As pointed out in the link, the `awk` solution is flawed and may not work for all types of input data. There also does not seem to be a generic `awk` solution to this problem. (`cut` will do it though)
 
@@ -125,7 +125,7 @@ As pointed out in the link, the `awk` solution is flawed and may not work for al
 {% highlight bash %}
  awk '{print FNR "\t" $0}'  some_flights.tsv
  
- kscript 'lines.mapIndexed { num, line -> num.toString() + " " + line }.print()'  some_flights.tsv
+ kscript -t 'lines.mapIndexed { num, line -> num.toString() + " " + line }.print()'  some_flights.tsv
 {% endhighlight %}
 
 * Delete trailing white space (spaces, tabs)
@@ -134,7 +134,7 @@ As pointed out in the link, the `awk` solution is flawed and may not work for al
 {% highlight bash %}
 awk '{sub(/[ \t]*$/, "");print}' file.txt
 
-kscript 'lines.map { it.trim() }.print()' file.txt
+kscript -t 'lines.map { it.trim() }.print()' file.txt
 {% endhighlight %}
 
 * Print the lines from a file starting at the line matching "start" until the line matching "stop":
@@ -143,7 +143,7 @@ kscript 'lines.map { it.trim() }.print()' file.txt
 {% highlight bash %}
 awk '/start/,/stop/' file.txt
 
-kscript 'lines.dropWhile { it.startsWith("start") }.takeWhile { !it.startsWith("stop") }.print()' file.txt
+kscript -t 'lines.dropWhile { it.startsWith("start") }.takeWhile { !it.startsWith("stop") }.print()' file.txt
 {% endhighlight %}
 
 
@@ -152,7 +152,7 @@ kscript 'lines.dropWhile { it.startsWith("start") }.takeWhile { !it.startsWith("
 
 {% highlight bash %}
 awk -F: '{ print $NF }' file.txt
-kscript 'lines.split(":").map { it[it.size - 1] }.print()' file.txt
+kscript -t 'lines.split(":").map { it[it.size - 1] }.print()' file.txt
 {% endhighlight %}
 
 * [Prints Record(line) number, and number of fields in that record](http://www.thegeekstuff.com/2010/01/8-powerful-awk-built-in-variables-fs-ofs-rs-ors-nr-nf-filename-fnr/?ref=binfind.com/web)
@@ -161,7 +161,7 @@ kscript 'lines.split(":").map { it[it.size - 1] }.print()' file.txt
 {% highlight bash %}
 awk '{print NR,"->",NF}' file.txt
 
-kscript 'lines.split().mapIndexed { index, row -> "$index -> " + row.size }.print()'
+kscript -t 'lines.split().mapIndexed { index, row -> "$index -> " + row.size }.print()'
 {% endhighlight %}
 
 As shown in the examples, we can just use regular _Kotlin_ to solve most `awk` use-cases easily. And keep in mind that `kscript` is not meant to be _just_ a table processor, for which we pay here with an extra in verbosity. The latter could be refactored into more specialized support library methods if needed/wanted, but which is intended for now to improve readability.
@@ -183,13 +183,13 @@ time awk '{print $10, $1, $12}' flights.tsv > /dev/null
 {% highlight text %}
 ##   336777 flights.tsv
 ## 
-## real	0m1.783s
-## user	0m1.745s
-## sys	0m0.021s
+## real	0m1.778s
+## user	0m1.741s
+## sys	0m0.023s
 {% endhighlight %}
 
 {% highlight bash %}
-time kscript 'lines.split().select(10,1,12).print()' flights.tsv > /dev/null
+time kscript -t 'lines.split().select(10,1,12).print()' flights.tsv > /dev/null
 {% endhighlight %}
 
 
@@ -197,9 +197,9 @@ time kscript 'lines.split().select(10,1,12).print()' flights.tsv > /dev/null
 
 {% highlight text %}
 ## 
-## real	0m1.548s
-## user	0m1.794s
-## sys	0m0.359s
+## real	0m1.671s
+## user	0m1.951s
+## sys	0m0.379s
 {% endhighlight %}
 Both solutions do not differ signifcantly in runtime. However, this actually means that  `kscript` is processing the data faster, because we loose around 350ms for the JVM startup. To illustrate that point we redo the benchmark with 20x of the data.
 
@@ -215,13 +215,13 @@ time awk '{print $10, $1, $12}' many_flights.tsv > /dev/null
 
 {% highlight text %}
 ## 
-## real	0m34.903s
-## user	0m34.273s
-## sys	0m0.437s
+## real	0m36.126s
+## user	0m35.220s
+## sys	0m0.553s
 {% endhighlight %}
 
 {% highlight bash %}
-time kscript 'lines.split().select(10,1,12).print()' many_flights.tsv > /dev/null
+time kscript -t 'lines.split().select(10,1,12).print()' many_flights.tsv > /dev/null
 {% endhighlight %}
 
 
@@ -229,9 +229,9 @@ time kscript 'lines.split().select(10,1,12).print()' many_flights.tsv > /dev/nul
 
 {% highlight text %}
 ## 
-## real	0m20.265s
-## user	0m16.718s
-## sys	0m4.566s
+## real	0m21.544s
+## user	0m17.962s
+## sys	0m4.802s
 {% endhighlight %}
 For the tested usecase, __`kscript` seems more than 30% faster than `awk`__. Long live the JIT compiler! :-)
 
@@ -244,13 +244,13 @@ Because of that, we still consider to replace/drop the support for automatic pre
 
 
 {% highlight bash %}
-kscript 'lines.split().select(with(1..3).and(3)).print()' file.txt
+kscript -t 'lines.split().select(with(1..3).and(3)).print()' file.txt
 {% endhighlight %}
 vs.
 
 
 {% highlight bash %}
-kscript '//DEPS com.github.holgerbrandl:kscript:1.2
+kscript -t '//DEPS com.github.holgerbrandl:kscript:1.2
 import kscript.text.*
 val lines = resolveArgFile(args)
 
